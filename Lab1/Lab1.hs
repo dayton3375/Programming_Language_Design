@@ -29,6 +29,13 @@ insertEvery n item (x:xs) = helper n item (x:xs)
 
 
 -- 5. split
+split :: Eq a => a -> [a] -> [[a]]
+split delim [] = [[]]
+split delim (x:xs) = splithelper delim (x:xs) []
+                     where
+                          splithelper delim [] buf = (reverse buf) : []
+                          splithelper delim (x:xs) buf | (x == delim) = ((reverse buf) : splithelper delim xs [])  -- maybe one test has a mistake? Passes all except test 3 (results in one extra empty list)
+                                                       | otherwise = splithelper delim xs (x:buf)
 
 
 -- 6. nSplit
