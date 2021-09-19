@@ -26,6 +26,10 @@ eliminateDuplicates (x:xs) = helperEliminateDuplicates (x:xs)
                                                                            cleanList c (x:xs) | (c == x) = cleanList c xs
                                                                                               | otherwise = x : (cleanList c xs)
 -- Q2(b) matchingSeconds
+matchingSeconds :: Eq t => t -> [(t, a)] -> [a]
+matchingSeconds v [] = []
+matchingSeconds v ((a, b):xs) | (a == v) = b : matchingSeconds v xs
+                              | otherwise = matchingSeconds v xs
 
 -- Q2(c) clusterCommon
 
