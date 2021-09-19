@@ -13,31 +13,31 @@ import HW1
 -- Function to sort second elements in each tuple
 sortSnds xs = map (\(x,y) -> (x,sort y)) xs
 
--- p1_test1 = TestCase (assertEqual "everyOther-test1" 
---                                  "ABCDEFGH" 
---                                  (everyOther "AaBbCcDdEeFfGgH") )
--- p1_test2 = TestCase (assertEqual "everyOther-test2" 
---                                  [1,3,5,7,9] 
---                                  (everyOther [1,2,3,4,5,6,7,8,9,10]) ) 
--- p1_test3 = TestCase (assertEqual "everyOther-test3" 
---                                  ["yes","oui","ja","evet","ye","shi","ie","nai"]  
---                                  (everyOther ["yes","no","oui","non","ja","nein","evet","hayir","ye","ani","shi", "hai","ie","meiyou","nai","ochi" ]) ) 
--- p1_test4 = TestCase (assertEqual "everyOther-test4" 
---                                  "A"  
---                                  (everyOther ['A']) ) 
+p1_test1 = TestCase (assertEqual "everyOther-test1" 
+                                 "ABCDEFGH" 
+                                 (everyOther "AaBbCcDdEeFfGgH") )
+p1_test2 = TestCase (assertEqual "everyOther-test2" 
+                                 [1,3,5,7,9] 
+                                 (everyOther [1,2,3,4,5,6,7,8,9,10]) ) 
+p1_test3 = TestCase (assertEqual "everyOther-test3" 
+                                 ["yes","oui","ja","evet","ye","shi","ie","nai"]  
+                                 (everyOther ["yes","no","oui","non","ja","nein","evet","hayir","ye","ani","shi", "hai","ie","meiyou","nai","ochi" ]) ) 
+p1_test4 = TestCase (assertEqual "everyOther-test4" 
+                                 "A"  
+                                 (everyOther ['A']) ) 
 
--- p2a_test1 = TestCase (assertEqual "eliminateDuplicates-test1" 
---                                   (sort [1,2,3,4,5,6,7])  
---                                   (sort $ eliminateDuplicates [6,5,1,6,4,2,2,3,7,2,1,1,2,3,4,5,6,7]) ) 
--- p2a_test2 = TestCase (assertEqual "eliminateDuplicates-test2" 
---                                   (sort "-CptS 321")  
---                                   (sort $ eliminateDuplicates "CptS322 - CptS322 - CptS 321") ) 
--- p2a_test3 = TestCase (assertEqual "eliminateDuplicates-test3" 
---                                   (sort [[1,2],[3],[1],[]])  
---                                   (sort $ eliminateDuplicates [[1,2],[1],[],[3],[1],[]]) ) 
--- p2a_test4 = TestCase (assertEqual "eliminateDuplicates-test4" 
---                                   (sort ["Let","snow","rain","let","it","hail"])  
---                                   (sort $ eliminateDuplicates ["Let","it","snow", "let","it", "rain", "let", "it","hail"]) ) 
+p2a_test1 = TestCase (assertEqual "eliminateDuplicates-test1" 
+                                  (sort [1,2,3,4,5,6,7])  
+                                  (sort $ eliminateDuplicates [6,5,1,6,4,2,2,3,7,2,1,1,2,3,4,5,6,7]) ) 
+p2a_test2 = TestCase (assertEqual "eliminateDuplicates-test2" 
+                                  (sort "-CptS 321")  
+                                  (sort $ eliminateDuplicates "CptS322 - CptS322 - CptS 321") ) 
+p2a_test3 = TestCase (assertEqual "eliminateDuplicates-test3" 
+                                  (sort [[1,2],[3],[1],[]])  
+                                  (sort $ eliminateDuplicates [[1,2],[1],[],[3],[1],[]]) ) 
+p2a_test4 = TestCase (assertEqual "eliminateDuplicates-test4" 
+                                  (sort ["Let","snow","rain","let","it","hail"])  
+                                  (sort $ eliminateDuplicates ["Let","it","snow", "let","it", "rain", "let", "it","hail"]) ) 
 
 p2b_test1 = TestCase (assertEqual "matchingSeconds-test1" 
                                   (sort [5,3]) 
@@ -49,15 +49,15 @@ p2b_test3 = TestCase (assertEqual "matchingSeconds-test3"
                                    (sort [355,302,322]) 
                                    (sort $ matchingSeconds "CptS" [("EE",214),("CptS",355),("CptS",302), ("CptS",322)]) ) 
 
--- p2c_test1 = TestCase (assertEqual "clusterCommon-test1" 
---                                    (sort $ sortSnds [("parrot",[3]),("dog",[10,5,7]),("cat",[5,3]),("fish",[1])])  
---                                    (sort $ sortSnds $ clusterCommon [("cat",5),("dog",10),("parrot",3),("dog",5),("dog",7),("cat",3), ("fish",1)]) ) 
--- p2c_test2 = TestCase (assertEqual "clusterCommon-test2" 
---                                    (sort $ sortSnds [(2,[20]),(1,[10,1]),(4,[400,40]),(3,[3,30,300])])  
---                                    (sort $ sortSnds $ clusterCommon [(1,10),(4,400),(3,3),(2,20),(3,30),(1,1),(4,40),(3,300)]) ) 
--- p2c_test3 = TestCase (assertEqual "clusterCommon-test3" 
---                                    ([]::[(Int,[Int])]) 
---                                    (clusterCommon []) ) 
+p2c_test1 = TestCase (assertEqual "clusterCommon-test1" 
+                                   (sort $ sortSnds [("parrot",[3]),("dog",[10,5,7]),("cat",[5,3]),("fish",[1])])  
+                                   (sort $ sortSnds $ clusterCommon [("cat",5),("dog",10),("parrot",3),("dog",5),("dog",7),("cat",3), ("fish",1)]) ) 
+p2c_test2 = TestCase (assertEqual "clusterCommon-test2" 
+                                   (sort $ sortSnds [(2,[20]),(1,[10,1]),(4,[400,40]),(3,[3,30,300])])  
+                                   (sort $ sortSnds $ clusterCommon [(1,10),(4,400),(3,3),(2,20),(3,30),(1,1),(4,40),(3,300)]) ) 
+p2c_test3 = TestCase (assertEqual "clusterCommon-test3" 
+                                   ([]::[(Int,[Int])]) 
+                                   (clusterCommon []) ) 
 
 -- cdcData =[ ("King" , [("Mar",2706),("Apr",3620),("May",1860),("Jun",2157),("July",5014),("Aug",4327),("Sep",2843)]),  
 --            ("Pierce", [("Mar",460),("Apr",965),("May",522),("Jun",2260),("July",2470),("Aug",1776),("Sep",1266)]), 
@@ -102,20 +102,20 @@ p2b_test3 = TestCase (assertEqual "matchingSeconds-test3"
 --                                   [5,6,7,8,10,11]  
 --                                   (getSlice (0,9)  [1,2,3,4,0,5,6,7,8,10,11] ) ) 
 
-tests = TestList [ --TestLabel "Problem 1- test1 " p1_test1,
-                --    TestLabel "Problem 1- test2 " p1_test2,  
-                --    TestLabel "Problem 1- test3 " p1_test3,
-                --    TestLabel "Problem 1- test4 " p1_test4,  
-                --    TestLabel "Problem 2a- test1 " p2a_test1,
-                --    TestLabel "Problem 2a- test2 " p2a_test2,  
-                --    TestLabel "Problem 2a- test3 " p2a_test3,  
-                --    TestLabel "Problem 2a- test4 " p2a_test4,  
+tests = TestList [ TestLabel "Problem 1- test1 " p1_test1,
+                   TestLabel "Problem 1- test2 " p1_test2,  
+                   TestLabel "Problem 1- test3 " p1_test3,
+                   TestLabel "Problem 1- test4 " p1_test4,  
+                   TestLabel "Problem 2a- test1 " p2a_test1,
+                   TestLabel "Problem 2a- test2 " p2a_test2,  
+                   TestLabel "Problem 2a- test3 " p2a_test3,  
+                   TestLabel "Problem 2a- test4 " p2a_test4,  
                    TestLabel "Problem 2b- test1 " p2b_test1, 
                    TestLabel "Problem 2b- test2 " p2b_test2, 
-                   TestLabel "Problem 2b- test3 " p2b_test3 
-                --    TestLabel "Problem 2c- test1 " p2c_test1, 
-                --    TestLabel "Problem 2c- test2 " p2c_test2, 
-                --    TestLabel "Problem 2c- test3 " p2c_test3, 
+                   TestLabel "Problem 2b- test3 " p2b_test3, 
+                   TestLabel "Problem 2c- test1 " p2c_test1, 
+                   TestLabel "Problem 2c- test2 " p2c_test2, 
+                   TestLabel "Problem 2c- test3 " p2c_test3 
                 --    TestLabel "Problem 3- test1 " p3_test1, 
                 --    TestLabel "Problem 3- test2 " p3_test2, 
                 --    TestLabel "Problem 3- test3 " p3_test3,

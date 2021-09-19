@@ -32,7 +32,16 @@ matchingSeconds v ((a, b):xs) | (a == v) = b : matchingSeconds v xs
                               | otherwise = matchingSeconds v xs
 
 -- Q2(c) clusterCommon
-
+clusterCommon :: (Eq t, Eq a) => [(t, a)] -> [(t, [a])]
+clusterCommon [] = []
+clusterCommon ((a, b):xs) = helperClusterCommon ((a, b):xs)
+                            where
+                                 helperClusterCommon [] = []
+                                 helperClusterCommon ((a, b):xs) = (a, (matchingSeconds a ((a, b):xs))) : helperClusterCommon (eliminate a xs)
+                                                                   where
+                                                                        eliminate tok [] = []
+                                                                        eliminate tok ((a, b):xs) | (a == tok) = eliminate tok xs
+                                                                                                  | otherwise = (a, b) : eliminate tok xs
 
 -- Q3 maxNumCases
 
