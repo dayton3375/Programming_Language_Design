@@ -44,7 +44,17 @@ clusterCommon ((a, b):xs) = helperClusterCommon ((a, b):xs)
                                                                                                   | otherwise = (a, b) : eliminate tok xs
 
 -- Q3 maxNumCases
-
+maxNumCases :: (Num p, Ord p, Eq t) => [(a, [(t, p)])] -> t -> p
+maxNumCases [] month = 0
+maxNumCases ((a, b):xs) month = helperMaxCases 0 ((a, b):xs) month
+                         where
+                              helperMaxCases cases [] month = cases
+                              helperMaxCases cases ((a, b):xs) month | ((checkCounty b month) > cases) = helperMaxCases (checkCounty b month) xs month
+                                                                     | otherwise = helperMaxCases cases xs month
+                                                                     where
+                                                                          checkCounty [] m = 0
+                                                                          checkCounty ((a, b):xs) m | (a /= m) = checkCounty xs m
+                                                                                               | otherwise = b
 
 -- Q4 groupIntoLists
 

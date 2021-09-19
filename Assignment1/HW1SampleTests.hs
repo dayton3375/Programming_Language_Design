@@ -59,22 +59,22 @@ p2c_test3 = TestCase (assertEqual "clusterCommon-test3"
                                    ([]::[(Int,[Int])]) 
                                    (clusterCommon []) ) 
 
--- cdcData =[ ("King" , [("Mar",2706),("Apr",3620),("May",1860),("Jun",2157),("July",5014),("Aug",4327),("Sep",2843)]),  
---            ("Pierce", [("Mar",460),("Apr",965),("May",522),("Jun",2260),("July",2470),("Aug",1776),("Sep",1266)]), 
---            ("Snohomish",[("Mar",1301),("Apr",1145),("May",532),("Jun",568),("July",1540),("Aug",4360),("Sep",811)]), 
---            ("Spokane", [("Mar",147),("Apr",4000),("May",233),("Jun",794),("July",2412),("Aug",1530),("Sep",1751)]), 
---            ("Whitman" , [("Apr",7),("May",5),("Jun",19),("July",51),("Aug",514),("Sep",732), ("Oct",278)])
---         ]
+cdcData =[ ("King" , [("Mar",2706),("Apr",3620),("May",1860),("Jun",2157),("July",5014),("Aug",4327),("Sep",2843)]),  
+           ("Pierce", [("Mar",460),("Apr",965),("May",522),("Jun",2260),("July",2470),("Aug",1776),("Sep",1266)]), 
+           ("Snohomish",[("Mar",1301),("Apr",1145),("May",532),("Jun",568),("July",1540),("Aug",4360),("Sep",811)]), 
+           ("Spokane", [("Mar",147),("Apr",4000),("May",233),("Jun",794),("July",2412),("Aug",1530),("Sep",1751)]), 
+           ("Whitman" , [("Apr",7),("May",5),("Jun",19),("July",51),("Aug",514),("Sep",732), ("Oct",278)])
+        ]
 
--- p3_test1 = TestCase (assertEqual "(maxNumCases-test1)" 
---                                   2260 (maxNumCases cdcData 
---                                   "Jun") ) 
--- p3_test2 = TestCase (assertEqual "(maxNumCases-test2)" 
---                                   4000 (maxNumCases cdcData 
---                                   "Apr") ) 
--- p3_test3 = TestCase (assertEqual "(maxNumCases-test3)" 
---                                   0  (maxNumCases cdcData 
---                                   "Jan") ) 
+p3_test1 = TestCase (assertEqual "(maxNumCases-test1)" 
+                                  2260 (maxNumCases cdcData 
+                                  "Jun") ) 
+p3_test2 = TestCase (assertEqual "(maxNumCases-test2)" 
+                                  4000 (maxNumCases cdcData 
+                                  "Apr") ) 
+p3_test3 = TestCase (assertEqual "(maxNumCases-test3)" 
+                                  0  (maxNumCases cdcData 
+                                  "Jan") ) 
 
 -- p4_test1 = TestCase (assertEqual "(groupIntoLists-test1)" 
 --                                   [[1],[2,3],[4,5,6],[7,8,9,10],[11,12]]  (groupIntoLists [1,2,3,4,5,6,7,8,9,10,11,12]) ) 
@@ -115,10 +115,10 @@ tests = TestList [ TestLabel "Problem 1- test1 " p1_test1,
                    TestLabel "Problem 2b- test3 " p2b_test3, 
                    TestLabel "Problem 2c- test1 " p2c_test1, 
                    TestLabel "Problem 2c- test2 " p2c_test2, 
-                   TestLabel "Problem 2c- test3 " p2c_test3 
-                --    TestLabel "Problem 3- test1 " p3_test1, 
-                --    TestLabel "Problem 3- test2 " p3_test2, 
-                --    TestLabel "Problem 3- test3 " p3_test3,
+                   TestLabel "Problem 2c- test3 " p2c_test3, 
+                   TestLabel "Problem 3- test1 " p3_test1, 
+                   TestLabel "Problem 3- test2 " p3_test2, 
+                   TestLabel "Problem 3- test3 " p3_test3
                 --    TestLabel "Problem 4- test1 " p4_test1, 
                 --    TestLabel "Problem 4- test2 " p4_test2,
                 --    TestLabel "Problem 4- test3 " p4_test3, 
