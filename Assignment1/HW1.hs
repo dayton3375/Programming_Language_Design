@@ -1,6 +1,6 @@
 -- CptS 355 - Fall 2021 -- Homework1 - Haskell
--- Name:
--- Collaborators: 
+-- Name: Dayton Dekam
+-- Collaborators: N/A
 
 module HW1
      where
@@ -57,7 +57,16 @@ maxNumCases ((a, b):xs) month = helperMaxCases 0 ((a, b):xs) month
                                                                                                | otherwise = b
 
 -- Q4 groupIntoLists
-
+groupIntoLists :: [a] -> [[a]]
+groupIntoLists [] = []
+groupIntoLists (x:xs) = helperGroupIntoLists 1 (x:xs) []
+                         where
+                              helperGroupIntoLists n [] buf = [reverse buf]
+                              helperGroupIntoLists n (x:xs) buf | (n == 0) = ((reverse buf) : helperGroupIntoLists ((size buf) + 1) (x:xs) []) 
+                                                                | otherwise = helperGroupIntoLists (n - 1) xs (x:buf)
+                                                                 where
+                                                                      size [] = 0
+                                                                      size (x:xs) = 1 + (size xs)
 
 -- Q5 getSlice 
 
