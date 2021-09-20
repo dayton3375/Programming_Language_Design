@@ -37,7 +37,7 @@ clusterCommon [] = []
 clusterCommon ((a, b):xs) = helperClusterCommon ((a, b):xs)
                             where
                                  helperClusterCommon [] = []
-                                 helperClusterCommon ((a, b):xs) = (a, (matchingSeconds a ((a, b):xs))) : helperClusterCommon (eliminate a xs)
+                                 helperClusterCommon ((a, b):xs) = (a, eliminateDuplicates (matchingSeconds a ((a, b):xs))) : helperClusterCommon (eliminate a xs)
                                                                    where
                                                                         eliminate tok [] = []
                                                                         eliminate tok ((a, b):xs) | (a == tok) = eliminate tok xs

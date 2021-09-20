@@ -25,6 +25,12 @@ p1_test3 = TestCase (assertEqual "everyOther-test3"
 p1_test4 = TestCase (assertEqual "everyOther-test4" 
                                  "A"  
                                  (everyOther ['A']) ) 
+p1_test5 = TestCase (assertEqual "everyOther-test5" 
+                                 ""  
+                                 (everyOther "") )   
+p1_test6 = TestCase (assertEqual "everyOther-test6" 
+                                 [1,2,3,4,9,0]
+                                 (everyOther [1,1,2,2,3,3,4,4,9,9,0]) )                                
 
 p2a_test1 = TestCase (assertEqual "eliminateDuplicates-test1" 
                                   (sort [1,2,3,4,5,6,7])  
@@ -37,7 +43,13 @@ p2a_test3 = TestCase (assertEqual "eliminateDuplicates-test3"
                                   (sort $ eliminateDuplicates [[1,2],[1],[],[3],[1],[]]) ) 
 p2a_test4 = TestCase (assertEqual "eliminateDuplicates-test4" 
                                   (sort ["Let","snow","rain","let","it","hail"])  
-                                  (sort $ eliminateDuplicates ["Let","it","snow", "let","it", "rain", "let", "it","hail"]) ) 
+                                  (sort $ eliminateDuplicates ["Let","it","snow", "let","it", "rain", "let", "it","hail"]) )
+p2a_test5 = TestCase (assertEqual "eliminateDuplicates-test5" 
+                                  (sort [7])  
+                                  (sort $ eliminateDuplicates [7]) ) 
+p2a_test6 = TestCase (assertEqual "eliminateDuplicates-test6" 
+                                  (sort [1])  
+                                  (sort $ eliminateDuplicates [1,1,1]) ) 
 
 p2b_test1 = TestCase (assertEqual "matchingSeconds-test1" 
                                   (sort [5,3]) 
@@ -48,6 +60,12 @@ p2b_test2 = TestCase (assertEqual "matchingSeconds-test2"
 p2b_test3 = TestCase (assertEqual "matchingSeconds-test3" 
                                    (sort [355,302,322]) 
                                    (sort $ matchingSeconds "CptS" [("EE",214),("CptS",355),("CptS",302), ("CptS",322)]) ) 
+p2b_test4 = TestCase (assertEqual "matchingSeconds-test4" 
+                                   (sort [444]) 
+                                   (sort $ matchingSeconds "" [("", 444)]) )
+p2b_test5 = TestCase (assertEqual "matchingSeconds-test5" 
+                                   (sort [92736]) 
+                                   (sort $ matchingSeconds "a" [("z",52867),("z",29473),("z",18452), ("a",92736)]) ) 
 
 p2c_test1 = TestCase (assertEqual "clusterCommon-test1" 
                                    (sort $ sortSnds [("parrot",[3]),("dog",[10,5,7]),("cat",[5,3]),("fish",[1])])  
@@ -57,7 +75,13 @@ p2c_test2 = TestCase (assertEqual "clusterCommon-test2"
                                    (sort $ sortSnds $ clusterCommon [(1,10),(4,400),(3,3),(2,20),(3,30),(1,1),(4,40),(3,300)]) ) 
 p2c_test3 = TestCase (assertEqual "clusterCommon-test3" 
                                    ([]::[(Int,[Int])]) 
-                                   (clusterCommon []) ) 
+                                   (clusterCommon []) )
+p2c_test4 = TestCase (assertEqual "clusterCommon-test4" 
+                                   (sort $ sortSnds [(4,[301])])  
+                                   (sort $ sortSnds $ clusterCommon [(4,301)]) ) 
+p2c_test5 = TestCase (assertEqual "clusterCommon-test5" 
+                                   (sort $ sortSnds [(7,[642])])  
+                                   (sort $ sortSnds $ clusterCommon [(7,642), (7,642)]) )
 
 cdcData =[ ("King" , [("Mar",2706),("Apr",3620),("May",1860),("Jun",2157),("July",5014),("Aug",4327),("Sep",2843)]),  
            ("Pierce", [("Mar",460),("Apr",965),("May",522),("Jun",2260),("July",2470),("Aug",1776),("Sep",1266)]), 
@@ -74,7 +98,13 @@ p3_test2 = TestCase (assertEqual "(maxNumCases-test2)"
                                   "Apr") ) 
 p3_test3 = TestCase (assertEqual "(maxNumCases-test3)" 
                                   0  (maxNumCases cdcData 
-                                  "Jan") ) 
+                                  "Jan") )
+p3_test4 = TestCase (assertEqual "(maxNumCases-test4)" 
+                                  0  (maxNumCases cdcData 
+                                  "") ) 
+p3_test5 = TestCase (assertEqual "(maxNumCases-test5)" 
+                                  0  (maxNumCases cdcData 
+                                  "salad") )
 
 p4_test1 = TestCase (assertEqual "(groupIntoLists-test1)" 
                                   [[1],[2,3],[4,5,6],[7,8,9,10],[11,12]]  (groupIntoLists [1,2,3,4,5,6,7,8,9,10,11,12]) ) 
@@ -82,6 +112,10 @@ p4_test2 = TestCase (assertEqual "(groupIntoLists-test2)"
                                   ["a","bc","def","ghij","klmno","pqrstu","wxyz012"]  (groupIntoLists "abcdefghijklmnopqrstuwxyz012") ) 
 p4_test3 = TestCase (assertEqual "(groupIntoLists-test3)" 
                                   []  (groupIntoLists "") ) 
+p4_test4 = TestCase (assertEqual "(groupIntoLists-test4)" 
+                                  [[1],[1,1],[1,1,1],[1,1,1,1],[1]]  (groupIntoLists [1,1,1,1,1,1,1,1,1,1,1]) )
+p4_test5 = TestCase (assertEqual "(groupIntoLists-test5)" 
+                                  [[1]]  (groupIntoLists [1]) )
 
 p5_test1 = TestCase (assertEqual "(getSlice-test1)"  
                                  "Covid-19"  
@@ -100,34 +134,54 @@ p5_test5 = TestCase (assertEqual "(getSlice-test5)"
                                   (getSlice (0,9)  [1,2,3,4,5,6,7,8,9,10,11] ) ) 
 p5_test6 = TestCase (assertEqual "(getSlice-test6)"  
                                   [5,6,7,8,10,11]  
-                                  (getSlice (0,9)  [1,2,3,4,0,5,6,7,8,10,11] ) ) 
+                                  (getSlice (0,9)  [1,2,3,4,0,5,6,7,8,10,11] ) )
+p5_test7 = TestCase (assertEqual "(getSlice-test7)"  
+                                 "" 
+                                 (getSlice ('d','a') "" ) ) 
+p5_test8 = TestCase (assertEqual "(getSlice-test8)"  
+                                 "is" 
+                                 (getSlice (' ', ' ') "Where is the space" ) )  
 
 tests = TestList [ TestLabel "Problem 1- test1 " p1_test1,
                    TestLabel "Problem 1- test2 " p1_test2,  
                    TestLabel "Problem 1- test3 " p1_test3,
-                   TestLabel "Problem 1- test4 " p1_test4,  
+                   TestLabel "Problem 1- test4 " p1_test4,
+                   TestLabel "Problem 1- test5 " p1_test5,
+                   TestLabel "Problem 1- test6 " p1_test6,   
                    TestLabel "Problem 2a- test1 " p2a_test1,
                    TestLabel "Problem 2a- test2 " p2a_test2,  
                    TestLabel "Problem 2a- test3 " p2a_test3,  
-                   TestLabel "Problem 2a- test4 " p2a_test4,  
+                   TestLabel "Problem 2a- test4 " p2a_test4,
+                   TestLabel "Problem 2a- test5 " p2a_test5,
+                   TestLabel "Problem 2a- test6 " p2a_test6,  
                    TestLabel "Problem 2b- test1 " p2b_test1, 
                    TestLabel "Problem 2b- test2 " p2b_test2, 
-                   TestLabel "Problem 2b- test3 " p2b_test3, 
+                   TestLabel "Problem 2b- test3 " p2b_test3,
+                   TestLabel "Problem 2b- test4 " p2b_test4,
+                   TestLabel "Problem 2b- test5 " p2b_test5, 
                    TestLabel "Problem 2c- test1 " p2c_test1, 
                    TestLabel "Problem 2c- test2 " p2c_test2, 
-                   TestLabel "Problem 2c- test3 " p2c_test3, 
+                   TestLabel "Problem 2c- test3 " p2c_test3,
+                   TestLabel "Problem 2c- test4 " p2c_test4,
+                   TestLabel "Problem 2c- test5 " p2c_test5, 
                    TestLabel "Problem 3- test1 " p3_test1, 
                    TestLabel "Problem 3- test2 " p3_test2, 
                    TestLabel "Problem 3- test3 " p3_test3,
+                   TestLabel "Problem 3- test4 " p3_test4,
+                   TestLabel "Problem 3- test5 " p3_test5,
                    TestLabel "Problem 4- test1 " p4_test1, 
                    TestLabel "Problem 4- test2 " p4_test2,
-                   TestLabel "Problem 4- test3 " p4_test3, 
+                   TestLabel "Problem 4- test3 " p4_test3,
+                   TestLabel "Problem 4- test4 " p4_test4,
+                   TestLabel "Problem 4- test5 " p4_test5, 
                    TestLabel "Problem 5- test1 " p5_test1, 
                    TestLabel "Problem 5- test2 " p5_test2,
                    TestLabel "Problem 5- test3 " p5_test3, 
                    TestLabel "Problem 5- test4 " p5_test4, 
                    TestLabel "Problem 5- test5 " p5_test5, 
-                   TestLabel "Problem 5- test6 " p5_test6 
+                   TestLabel "Problem 5- test6 " p5_test6,
+                   TestLabel "Problem 5- test7 " p5_test7,
+                   TestLabel "Problem 5- test8 " p5_test8 
                  ] 
                   
 -- shortcut to run the tests
