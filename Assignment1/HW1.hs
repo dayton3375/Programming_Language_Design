@@ -69,5 +69,16 @@ groupIntoLists (x:xs) = helperGroupIntoLists 1 (x:xs) []
                                                                       size (x:xs) = 1 + (size xs)
 
 -- Q5 getSlice 
-
+getSlice :: Eq a => (a, a) -> [a] -> [a]
+getSlice (a, b) [] = []
+getSlice (a, b) (x:xs) = cutHead (a, b) (x:xs)
+                         where
+                              cutHead (a, b) [] = []
+                              cutHead (a, b) (x:xs) | (x == a) = cutTail b xs []
+                                                      | otherwise = cutHead (a, b) xs
+                                                      where
+                                                           cutTail b [] [] = []
+                                                           cutTail b [] buf = reverse buf
+                                                           cutTail b (x:xs) buf | (x == b) = reverse buf
+                                                                                | otherwise = cutTail b xs (x:buf)
 
