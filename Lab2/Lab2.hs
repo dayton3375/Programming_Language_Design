@@ -1,6 +1,6 @@
 -- CptS 355 - Lab 2 (Haskell) - Fall 2021
--- Name: 
--- Collaborated with: 
+-- Name: Dayton Dekam
+-- Collaborated with: N/A
 
 module Lab2
      where
@@ -8,16 +8,25 @@ module Lab2
 
 -- 1
 {- (a) merge2 -}
-
-                         
+merge2 :: [a] -> [a] -> [a]
+merge2 [] [] = []
+merge2 [] (y:ys) = y:ys
+merge2 (x:xs) [] = x:xs
+merge2 (x:xs) (y:ys) = x : y : (merge2 xs ys)         
 
 {- (b) merge2Tail -}
+merge2Tail :: [a] -> [a] -> [a]
+merge2Tail [] [] = []
+merge2Tail [] (y:ys) = y:ys
+merge2Tail (x:xs) [] = x:xs
+merge2Tail (x:xs) (y:ys) = merge2TailHelper (x : y : []) xs ys
 
-
-
+merge2TailHelper :: [a] -> [a] -> [a] -> [a]
+merge2TailHelper buf [] (y:ys) = reverse buf -- cons y:ys
+merge2TailHelper buf (x:xs) [] = reverse buf -- cons x:xs
+merge2TailHelper buf (x:xs) (y:ys) = merge2TailHelper (x : y : buf) xs ys
 
 {- (c) mergeN -}
-
 
 
 
