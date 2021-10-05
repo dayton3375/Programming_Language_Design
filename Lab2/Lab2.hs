@@ -17,17 +17,20 @@ merge2 (x:xs) (y:ys) = x : y : (merge2 xs ys)
 {- (b) merge2Tail -}
 merge2Tail :: [a] -> [a] -> [a]
 merge2Tail [] [] = []
-merge2Tail [] (y:ys) = y:ys
-merge2Tail (x:xs) [] = x:xs
-merge2Tail (x:xs) (y:ys) = merge2TailHelper (x : y : []) xs ys
+merge2Tail [] (y:ys) = (y:ys)
+merge2Tail (x:xs) [] = (x:xs)
+merge2Tail (x:xs) (y:ys) = merge2TailHelper [] (x:xs) (y:ys)
 
 merge2TailHelper :: [a] -> [a] -> [a] -> [a]
-merge2TailHelper buf [] (y:ys) = reverse buf -- cons y:ys
-merge2TailHelper buf (x:xs) [] = reverse buf -- cons x:xs
-merge2TailHelper buf (x:xs) (y:ys) = merge2TailHelper (x : y : buf) xs ys
+merge2TailHelper buf [] [] = reverse buf
+merge2TailHelper buf [] (y:ys) = (reverse (y : buf)) ++ ys
+merge2TailHelper buf (x:xs) [] = (reverse (x : buf)) ++ xs
+merge2TailHelper buf (x:xs) (y:ys) = merge2TailHelper (y : x : buf) xs ys
 
 {- (c) mergeN -}
-
+mergeN :: [[a]] -> [a]
+mergeN [] = []
+mergeN (x:xs) = foldl merge2Tail x xs
 
 
 -- 2
