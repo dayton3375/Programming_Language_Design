@@ -18,12 +18,16 @@ groupbyNTail iL n = grouptailhelper iL n [] []
 
 {- (a)  elemAll - 10%-}
 -- please don't include the myCatsLog list in your solution file. 
-elemAll :: [a] -> [a] -> Bool
-elemAll [] [] = True
+elemAll :: (Eq a) => [a] -> [a] -> Bool
+elemAll [] [] = True          -- nothing is within nothing
 elemAll (x:xs) [] = False
-elemAll [] (y:ys) = True
-elemAll (x:xs) (y:ys) = False
-
+elemAll [] (y:ys) = True      -- debatable, but assumes nothing is an element of y:ys
+elemAll (x:xs) (y:ys) | (elem False (map (elemhelper (y:ys)) (x:xs)) == False) = True
+                      | otherwise = False
+     where
+          elemhelper [] z = False
+          elemhelper (x:xs) z | ((elem z (x:xs)) == True) = True
+                              | otherwise = False
 {- (b) stopsAt - 10%-}
 
 -----------------------------------------------------------
