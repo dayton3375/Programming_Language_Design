@@ -29,16 +29,26 @@ elemAll (x:xs) (y:ys) | (elem False (map (elemhelper (y:ys)) (x:xs)) == False) =
           elemhelper (x:xs) z | ((elem z (x:xs)) == True) = True
                               | otherwise = False
 {- (b) stopsAt - 10%-}
-
+--stopsAt :: (Eq x) => [[a]] -> [(x,y)] -> [[a]]    (can't use this signature due to rigit type errors)
+stopsAt [] [] = []
+stopsAt [] ((x,y):xs) = []
+stopsAt (z:zs) ((x,y):xs) = map fst (filter (stopsAtHelper (z:zs)) ((x,y):xs)) 
+     where
+          stopsAtHelper (z:zs) (x,y) = elemAll (z:zs) y
 -----------------------------------------------------------
 
 {- 3. isBigger and applyRange - 25% -}
 
---define the Timestamp datatype
--- data Timestamp =  DATE (Int,Int,Int) |  DATETIME (Int,Int,Int,Int,Int) 
---                   deriving (Show, Eq)
+-- define the Timestamp datatype
+data Timestamp =  DATE (Int,Int,Int) |  DATETIME (Int,Int,Int,Int,Int) 
+                  deriving (Show, Eq)
 
 {- (a)  isBigger - 15% -}
+-- isBigger :: Timestamp -> Timestamp -> Bool
+-- isBigger (DATE (x1,x2,x3)) (DATE (y1,y2,y3)) = False
+-- isBigger (DATE (x1,x2,x3,x4,x5)) (DATE (y1,y2,y3)) = False
+--isBigger (DATE (x1,x2,x3)) (DATE (y1,y2,y3,y4,y5)) = False
+--isBigger (DATE (x1,x2,x3,x4,x5)) (DATE (y1,y2,y3,y4,y5)) = False
 
 {- (b) applyRange - 10% -}
 
@@ -46,18 +56,32 @@ elemAll (x:xs) (y:ys) | (elem False (map (elemhelper (y:ys)) (x:xs)) == False) =
 -----------------------------------------------------------
 {-4 - foldTree, createRTree, fastSearch  - 35%-}
 
---define Tree and RTree data types
--- data Tree a = LEAF a | NODE a (Tree a) (Tree a)
---                deriving (Show,  Eq, Ord)
+-- define Tree and RTree data types
+data Tree a = LEAF a | NODE a (Tree a) (Tree a)
+               deriving (Show,  Eq, Ord)
 
--- data RTree a = RLEAF a | RNODE a (a,a) (RTree a) (RTree a)
---                     deriving (Show, Eq, Ord)
+data RTree a = RLEAF a | RNODE a (a,a) (RTree a) (RTree a)
+                    deriving (Show, Eq, Ord)
 
 {- (a) foldTree - 8% -}
+foldTree :: (t -> t -> t) -> Tree t -> t
+foldTree op (LEAF v) = v
+foldTree op (NODE t1 t2 t3) = op t1 (op (foldTree op t2) (foldTree op t3))
 
 {- (b) createRTree - 12% -}
+createRTree :: Ord t => Tree t -> RTree t
+createRTree (LEAF v) = RLEAF v
+createRTree (NODE op left right) = RNODE op value (createRTree left) (createRTree right)
+                              where value = (foldTree min (NODE op left right), foldTree max (NODE op left right))
 
 {- (c) fastSearch - 15% -}
+fastSearch :: Ord t => RTree t -> t -> [([Char], t)]
+fastSearch (RLEAF l) x = [("leaf", l)]
+fastSearch n x = reverse (fastSearchHelper n x []) -- need a helper to pass in empty list to cons
+     where
+          fastSearchHelper (RLEAF l) x buf = [("leaf", l)]       -- if n is within the tupil range, keep traversing right and left while adding the current node
+          fastSearchHelper (RNODE n (a, b) left right) x buf | ((x >= a) && (x <= b)) = (fastSearchHelper right x buf) ++ (fastSearchHelper left x buf) ++ [("node", n)] ++ buf
+                                                             | otherwise = ("node", n) : buf 
 
 -------------------------------------------------------------------
 
