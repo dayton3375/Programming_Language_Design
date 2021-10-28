@@ -11,10 +11,9 @@ class Lab3_Q1_Tests(unittest.TestCase):
 
     def test_getNumCases_1 (self):
         self.assertEqual(getNumCases(self.CDCdata,['Whitman'],['Apr','May','Jun']),31)
-        
+
     def test_getNumCases_2 (self):
         self.assertEqual(getNumCases(self.CDCdata,['King','Pierce'],['July','Aug']),13587)
 
 if __name__ == '__main__':
     unittest.main()
-
