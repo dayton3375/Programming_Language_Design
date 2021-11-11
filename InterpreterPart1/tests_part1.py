@@ -60,12 +60,12 @@ class HW4Sampletests_part1(unittest.TestCase):
         self.psstacks.add()
         self.assertEqual(self.psstacks.opPop(),12)
 
-    # def test_sub(self):
-    #     #10 2 sub
-    #     self.psstacks.opPush(10)
-    #     self.psstacks.opPush(2)
-    #     self.psstacks.sub()
-    #     self.assertEqual(self.psstacks.opPop(),8)
+    def test_sub(self):
+        #10 2 sub
+        self.psstacks.opPush(10)
+        self.psstacks.opPush(2)
+        self.psstacks.sub()
+        self.assertEqual(self.psstacks.opPop(),8)
 
     # def test_mul(self):
     #     #2 40 mul

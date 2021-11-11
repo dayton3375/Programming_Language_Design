@@ -76,7 +76,13 @@ class Operators:
        Pop 2 values from opstack; checks if they are numerical (int); subtracts them; and pushes the result back to opstack. 
     """   
     def sub(self):
-        pass
+        if len(self.opstack) > 1:
+            op1 = self.opPop()
+            op2 = self.opPop()
+            if (isinstance(op1, int) and isinstance(op2, int)):
+                self.opPush(op2 - op1)
+            else:
+                print("Error: sub - one of the operands is not a number value")
 
     """
         Pops 2 values from opstack; checks if they are numerical (int); multiplies them; and pushes the result back to opstack. 
