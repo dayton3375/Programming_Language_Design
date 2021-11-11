@@ -74,12 +74,12 @@ class HW4Sampletests_part1(unittest.TestCase):
         self.psstacks.mul()
         self.assertEqual(self.psstacks.opPop(),80)
 
-    # def test_mod(self):
-    #     #20 3 mod
-    #     self.psstacks.opPush(20)
-    #     self.psstacks.opPush(3)
-    #     self.psstacks.mod()
-    #     self.assertEqual(self.psstacks.opPop(),2)
+    def test_mod(self):
+        #20 3 mod
+        self.psstacks.opPush(20)
+        self.psstacks.opPush(3)
+        self.psstacks.mod()
+        self.assertEqual(self.psstacks.opPop(),2)
 
     #-----------------------------------------------------
     #Comparison operators tests

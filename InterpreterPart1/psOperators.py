@@ -101,7 +101,15 @@ class Operators:
         pushes the result back to opstack.
     """ 
     def mod(self):
-        pass
+        if len(self.opstack) > 1:
+            op1 = self.opPop()
+            op2 = self.opPop()
+            if (isinstance(op1, int) and isinstance(op2, int)):
+                self.opPush(op2 % op1)
+            else:
+                print("Error: mod - one of the operands is not a number value")
+
+
     #---------- Comparison Operators  -----------------
     """
        Pops the top two values from the opstack; pushes "True" is they are equal, otherwise pushes "False"
