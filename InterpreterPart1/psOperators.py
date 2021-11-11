@@ -88,7 +88,13 @@ class Operators:
         Pops 2 values from opstack; checks if they are numerical (int); multiplies them; and pushes the result back to opstack. 
     """    
     def mul(self):
-        pass
+        if len(self.opstack) > 1:
+            op1 = self.opPop()
+            op2 = self.opPop()
+            if (isinstance(op1, int) and isinstance(op2, int)):
+                self.opPush(op1 * op2)
+            else:
+                print("Error: mul - one of the operands is not a number value")
 
     """
         Pops 2 values from stack; checks if they are int values; calculates the remainder of dividing the bottom value by the top one; 

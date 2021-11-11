@@ -67,12 +67,12 @@ class HW4Sampletests_part1(unittest.TestCase):
         self.psstacks.sub()
         self.assertEqual(self.psstacks.opPop(),8)
 
-    # def test_mul(self):
-    #     #2 40 mul
-    #     self.psstacks.opPush(2)
-    #     self.psstacks.opPush(40)
-    #     self.psstacks.mul()
-    #     self.assertEqual(self.psstacks.opPop(),80)
+    def test_mul(self):
+        #2 40 mul
+        self.psstacks.opPush(2)
+        self.psstacks.opPush(40)
+        self.psstacks.mul()
+        self.assertEqual(self.psstacks.opPop(),80)
 
     # def test_mod(self):
     #     #20 3 mod
