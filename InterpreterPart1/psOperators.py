@@ -8,7 +8,7 @@ class Operators:
         #The builtin operators supported by our interpreter
         self.builtin_operators = {
              # TO-DO in part1
-             # include the key value pairs where he keys are the PostScrip opertor names and the values are the function values that implement that operator. 
+             # include the key value pairs where he keys are the PostScript opertor names and the values are the function values that implement that operator. 
              # Make sure **not to call the functions** 
         }
     #-------  Operand Stack Operators --------------
@@ -16,13 +16,14 @@ class Operators:
         Helper function. Pops the top value from opstack and returns it.
     """
     def opPop(self):
-        pass
+        val = self.opstack.pop()
+        return val
 
     """
        Helper function. Pushes the given value to the opstack.
     """
     def opPush(self,value):
-        pass
+        self.opstack.append(value)
         
     #------- Dict Stack Operators --------------
     
@@ -207,7 +208,9 @@ class Operators:
        Pops an integer from the opstack (size argument) and pushes an  empty dictionary onto the opstack.
     """
     def psDict(self):
-        pass
+        self.opstack.pop()
+        empty_dict = {}
+        self.opPush(empty_dict)
 
     """
        Pops the dictionary at the top of the opstack; pushes it to the dictstack.
