@@ -31,20 +31,28 @@ class Operators:
        Helper function. Pops the top dictionary from dictstack and returns it.
     """   
     def dictPop(self):
-        pass
+        if len(self.dictstack) > 0:
+            val = self.dictstack.pop
+        else:
+            val = None
+        return val
 
     """
        Helper function. Pushes the given dictionary onto the dictstack. 
     """   
     def dictPush(self,d):
-        pass
+        self.dictstack.append(d)
 
     """
        Helper function. Adds name:value pair to the top dictionary in the dictstack.
        (Note: If the dictstack is empty, first adds an empty dictionary to the dictstack then adds the name:value to that. 
     """   
     def define(self,name, value):
-        pass
+        if len(self.dictstack) == 0:
+            newdict = {}
+            self.dictstack.append(newdict)
+        self.dictstack[-1][name] = value    # gets last element of list and adds the key:value to that dictionary
+            
 
     """
        Helper function. Searches the dictstack for a variable or function and returns its value. 
@@ -52,7 +60,18 @@ class Operators:
         Make sure to add '/' to the begining of the name.)
     """
     def lookup(self,name):
-        pass
+        if len(self.dictstack) == 0:
+            print("Error: lookup - dictstack is empty")
+            return None
+
+        key = '/' + name
+
+        for d in reversed(self.dictstack): # search each dictionary in the stack
+            if key in d:
+                return d[key]
+
+        print("Error: lookup - name not found")
+        return None
     
     #------- Arithmetic Operators --------------
     

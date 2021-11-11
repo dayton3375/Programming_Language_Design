@@ -14,43 +14,43 @@ class HW4Sampletests_part1(unittest.TestCase):
         self.psstacks.clearBoth() 
 
     # Tests for helper functions : define, lookup   
-    # def test_lookup1(self):
-    #     self.psstacks.dictPush({'/v':3, '/x': 20})
-    #     self.psstacks.dictPush({'/v':4, '/x': 10})
-    #     self.psstacks.dictPush({'/v':5})
-    #     self.assertEqual(self.psstacks.lookup('x'),10)
-    #     self.assertEqual(self.psstacks.lookup('v'),5)
+    def test_lookup1(self):
+        self.psstacks.dictPush({'/v':3, '/x': 20})
+        self.psstacks.dictPush({'/v':4, '/x': 10})
+        self.psstacks.dictPush({'/v':5})
+        self.assertEqual(self.psstacks.lookup('x'),10)
+        self.assertEqual(self.psstacks.lookup('v'),5)
 
-    # def testLookup2(self):
-    #     self.psstacks.dictPush({'/a':355})
-    #     arrayV = ArrayValue([3,5,5])
-    #     self.psstacks.dictPush({'/a':arrayV})
-    #     self.assertTrue(self.psstacks.lookup("a") is arrayV)
-    #     self.assertEqual(self.psstacks.lookup("a").value,arrayV.value)
+    def testLookup2(self):
+        self.psstacks.dictPush({'/a':355})
+        arrayV = ArrayValue([3,5,5])
+        self.psstacks.dictPush({'/a':arrayV})
+        self.assertTrue(self.psstacks.lookup("a") is arrayV)
+        self.assertEqual(self.psstacks.lookup("a").value,arrayV.value)
 
-    # def test_define1(self):
-    #     self.psstacks.dictPush({})
-    #     self.psstacks.define("/n1", 4)
-    #     self.assertEqual(self.psstacks.lookup("n1"),4)
+    def test_define1(self):
+        self.psstacks.dictPush({})
+        self.psstacks.define("/n1", 4)
+        self.assertEqual(self.psstacks.lookup("n1"),4)
 
-    # def test_define2(self):
-    #     self.psstacks.dictPush({})
-    #     self.psstacks.define("/n1", 4)
-    #     self.psstacks.define("/n1", 5)
-    #     self.psstacks.define("/n2", 6)
-    #     self.assertEqual(self.psstacks.lookup("n1"),5)
-    #     self.assertEqual(self.psstacks.lookup("n2"),6)        
+    def test_define2(self):
+        self.psstacks.dictPush({})
+        self.psstacks.define("/n1", 4)
+        self.psstacks.define("/n1", 5)
+        self.psstacks.define("/n2", 6)
+        self.assertEqual(self.psstacks.lookup("n1"),5)
+        self.assertEqual(self.psstacks.lookup("n2"),6)        
 
-    # def test_define3(self):
-    #     self.psstacks.dictPush({})
-    #     self.psstacks.define("/n1", 4)
-    #     self.psstacks.dictPush({})
-    #     self.psstacks.define("/n2", 6)
-    #     self.psstacks.define("/n2", 7)
-    #     self.psstacks.dictPush({})
-    #     self.psstacks.define("/n1", 6)
-    #     self.assertEqual(self.psstacks.lookup("n1"),6)
-    #     self.assertEqual(self.psstacks.lookup("n2"),7)    
+    def test_define3(self):
+        self.psstacks.dictPush({})
+        self.psstacks.define("/n1", 4)
+        self.psstacks.dictPush({})
+        self.psstacks.define("/n2", 6)
+        self.psstacks.define("/n2", 7)
+        self.psstacks.dictPush({})
+        self.psstacks.define("/n1", 6)
+        self.assertEqual(self.psstacks.lookup("n1"),6)
+        self.assertEqual(self.psstacks.lookup("n2"),7)    
     #-----------------------------------------------------
     #Arithmatic operator tests
     def test_add(self):
@@ -83,12 +83,12 @@ class HW4Sampletests_part1(unittest.TestCase):
 
     #-----------------------------------------------------
     #Comparison operators tests
-    # def test_eq1(self):
-    #     #6 6 eq
-    #     self.psstacks.opPush(6)
-    #     self.psstacks.opPush(6)
-    #     self.psstacks.eq()
-    #     self.assertEqual(self.psstacks.opPop(),True)
+    def test_eq1(self):
+        #6 6 eq
+        self.psstacks.opPush(6)
+        self.psstacks.opPush(6)
+        self.psstacks.eq()
+        self.assertEqual(self.psstacks.opPop(),True)
 
     # def test_eq2(self):
     #     #[1 2 3 4] [1 2 3 4] eq
