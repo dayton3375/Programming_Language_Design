@@ -1,3 +1,5 @@
+# Name: Dayton Dekam
+
 from psItems import Value, ArrayValue, FunctionValue
 class Operators:
     def __init__(self):
@@ -35,7 +37,7 @@ class Operators:
     """   
     def dictPop(self):
         if len(self.dictstack) > 0:
-            val = self.dictstack.pop
+            val = self.dictstack.pop()
         else:
             val = None
         return val
@@ -219,7 +221,13 @@ class Operators:
         The index is 0-based. If the end index of the slice goes beyond the array length, will give an error. 
     """
     def putinterval(self):
-        pass
+        if len(self.opstack) >= 3:
+            snipArray = self.opPop()
+            index = self.opPop()
+            opArray = self.opPop()
+            opArray.value[index:index + len(snipArray.value)] = snipArray.value
+        else:
+            print("Error: putinterval - opstack has less than 3 elements")
             
 
     """ 
@@ -228,7 +236,13 @@ class Operators:
         Pushes the orginal array value back on to the stack. 
     """
     def aload(self):
-        pass
+        if len(self.opstack) > 0:
+            ar = self.opPop()
+            for val in ar.value:
+                self.opPush(val)
+            self.opPush(ar)
+        else:
+            print("Error: putinterval - opstack is empty")
         
     """ 
         Pops an array constant (ArrayValue) from the operand stack.  
@@ -237,7 +251,18 @@ class Operators:
         Pushes the array value back onto the operand stack. 
     """
     def astore(self):
-        pass
+        if len(self.opstack) > 0:
+            ar = self.opPop()
+            if len(self.opstack) >= len(ar.value):
+                length = len(ar.value)
+                ar.value.clear()
+                for i in range(length):
+                    ar.value.insert(0,self.opPop())
+                self.opPush(ar)
+            else:
+                print("Error: putinterval - opstack doesn't have enough elements")
+        else:
+            print("Error: putinterval - opstack is empty")
 
     #------- Stack Manipulation and Print Operators --------------
 
@@ -335,7 +360,8 @@ class Operators:
        Pops an integer from the opstack (size argument) and pushes an  empty dictionary onto the opstack.
     """
     def psDict(self):
-        self.opstack.pop()
+        if len(self.opstack) > 0:
+            self.opstack.pop()
         empty_dict = {}
         self.opPush(empty_dict)
 
@@ -343,19 +369,34 @@ class Operators:
        Pops the dictionary at the top of the opstack; pushes it to the dictstack.
     """
     def begin(self):
-        pass
+        if len(self.opstack) > 0:
+            topD = self.opPop()
+            if isinstance(topD, dict):
+                self.dictPush(topD)
+            else:
+                print("Error: begin - top opstack element not dictionary")
+        else:
+            print("Error: begin - opstack empty")
 
     """
        Removes the top dictionary from dictstack.
     """
     def end(self):
-        pass
+        if len(self.dictstack) > 0:
+            self.dictPop()
+        else:
+            print("Error: end - dictstack empty")
         
     """
        Pops a name and a value from opstack, adds the name:value pair to the top dictionary by calling define.  
     """
     def psDef(self):
-        pass
+        if len(self.opstack) >= 2:
+            value = self.opPop()
+            name = self.opPop()
+            self.define(name, value)
+        else:
+            print("Error: psDef - opstack has less than 2 elements")
 
 
     # ------- if/ifelse Operators --------------

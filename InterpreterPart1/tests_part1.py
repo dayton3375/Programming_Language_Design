@@ -1,3 +1,5 @@
+# Name: Dayton Dekam
+
 from psOperators import Operators
 from psItems import ArrayValue
 import unittest
@@ -139,56 +141,56 @@ class HW4Sampletests_part1(unittest.TestCase):
         self.assertTrue(len(self.psstacks.opstack)==0)
         #getinterval will not push back the original array onto the opstack 
 
-    # def test_putinterval1(self):
-        # #[0 1 2 3 4 5 6 7] dup dup dup 3 [30 40 50 60] putinterval
-        # arr1 = ArrayValue([0, 1, 2, 3, 4, 5, 6, 7] )
-        # self.psstacks.opPush(arr1)
-        # self.psstacks.dup()  # duplicating the array reference
-        # self.psstacks.dup()  # duplicating the array reference
-        # self.psstacks.opPush(3)
-        # self.psstacks.opPush(ArrayValue([30, 40, 50, 60]))  # the slice that starts at index 3 will be replaced by [30 40 50 60]
-        # self.psstacks.putinterval()  # putinterval will not push back the changed array onto the opstack 
-        # arr2 = self.psstacks.opPop()  # we pop the string reference we copied with "dup"; 
-        # self.assertTrue(arr2 is arr1)  # check if it the same object
-        # self.assertEqual(arr2.value,[0, 1, 2, 30, 40, 50, 60, 7])  # we check if the ArrValue object value is updated
-        # arr3 = self.psstacks.opPop()  # #we pop the string reference we copied with "dup";
-        # self.assertTrue(arr3 is arr1)  # check if it the same object
-        # self.assertEqual(arr3.value,[0, 1, 2, 30, 40, 50, 60, 7])  # we check if the ArrayValue object value is updated
-        # self.assertTrue(len(self.psstacks.opstack)==0)
+    def test_putinterval1(self):
+        #[0 1 2 3 4 5 6 7] dup dup dup 3 [30 40 50 60] putinterval
+        arr1 = ArrayValue([0, 1, 2, 3, 4, 5, 6, 7] )
+        self.psstacks.opPush(arr1)
+        self.psstacks.dup()  # duplicating the array reference
+        self.psstacks.dup()  # duplicating the array reference
+        self.psstacks.opPush(3)
+        self.psstacks.opPush(ArrayValue([30, 40, 50, 60]))  # the slice that starts at index 3 will be replaced by [30 40 50 60]
+        self.psstacks.putinterval()  # putinterval will not push back the changed array onto the opstack 
+        arr2 = self.psstacks.opPop()  # we pop the string reference we copied with "dup"; 
+        self.assertTrue(arr2 is arr1)  # check if it the same object
+        self.assertEqual(arr2.value,[0, 1, 2, 30, 40, 50, 60, 7])  # we check if the ArrValue object value is updated
+        arr3 = self.psstacks.opPop()  # #we pop the string reference we copied with "dup";
+        self.assertTrue(arr3 is arr1)  # check if it the same object
+        self.assertEqual(arr3.value,[0, 1, 2, 30, 40, 50, 60, 7])  # we check if the ArrayValue object value is updated
+        self.assertTrue(len(self.psstacks.opstack)==0)
 
-    # def test_putinterval2(self):
-    #     #/x [0 1 2 3 4 5 6 7] def x 3 [30 40 50 60] putinterval x
-    #     arr1 = ArrayValue([0, 1, 2, 3, 4, 5, 6, 7] )
-    #     self.psstacks.opPush('/x')
-    #     self.psstacks.opPush(arr1)
-    #     self.psstacks.psDef()  #defines x; x holds the array reference
-    #     self.psstacks.opPush(self.psstacks.lookup('x'))  # pushed the array reference x holds onto the stack
-    #     self.psstacks.opPush(3)
-    #     self.psstacks.opPush(ArrayValue([30, 40, 50, 60]))  # the slice that starts at index 3 will be replaced by [30 40 50 60]
-    #     self.psstacks.putinterval()  # putinterval will not push back the changed array onto the opstack 
-    #     self.psstacks.opPush(self.psstacks.lookup('x'))  # pushed the array reference x holds onto the stack
-    #     arr2 = self.psstacks.opPop()  # we pop the array reference ;
-    #     self.assertTrue(arr2 is arr1) # check if it the same object
-    #     self.assertEqual(arr2.value,[0, 1, 2, 30, 40, 50, 60, 7])  # we check if the ArrayValue object value is updated
-    #     self.assertTrue(len(self.psstacks.opstack)==0)
+    def test_putinterval2(self):
+        #/x [0 1 2 3 4 5 6 7] def x 3 [30 40 50 60] putinterval x
+        arr1 = ArrayValue([0, 1, 2, 3, 4, 5, 6, 7] )
+        self.psstacks.opPush('/x')
+        self.psstacks.opPush(arr1)
+        self.psstacks.psDef()  #defines x; x holds the array reference
+        self.psstacks.opPush(self.psstacks.lookup('x'))  # pushed the array reference x holds onto the stack
+        self.psstacks.opPush(3)
+        self.psstacks.opPush(ArrayValue([30, 40, 50, 60]))  # the slice that starts at index 3 will be replaced by [30 40 50 60]
+        self.psstacks.putinterval()  # putinterval will not push back the changed array onto the opstack 
+        self.psstacks.opPush(self.psstacks.lookup('x'))  # pushed the array reference x holds onto the stack
+        arr2 = self.psstacks.opPop()  # we pop the array reference ;
+        self.assertTrue(arr2 is arr1) # check if it the same object
+        self.assertEqual(arr2.value,[0, 1, 2, 30, 40, 50, 60, 7])  # we check if the ArrayValue object value is updated
+        self.assertTrue(len(self.psstacks.opstack)==0)
 
-    # def test_aload(self):
-    #     #[3 5 5 True] aload
-    #     self.psstacks.opPush(ArrayValue([3,5,5,True]))
-    #     self.psstacks.aload()
-    #     self.assertTrue(self.psstacks.opPop().value==[3,5,5,True] and  #check whether the arrray value is pushed back onto the stack 
-    #                     self.psstacks.opPop()==True and self.psstacks.opPop() == 5 and self.psstacks.opPop() == 5 and self.psstacks.opPop()==3)  
+    def test_aload(self):
+        #[3 5 5 True] aload
+        self.psstacks.opPush(ArrayValue([3,5,5,True]))
+        self.psstacks.aload()
+        self.assertTrue(self.psstacks.opPop().value==[3,5,5,True] and  #check whether the arrray value is pushed back onto the stack 
+                        self.psstacks.opPop()==True and self.psstacks.opPop() == 5 and self.psstacks.opPop() == 5 and self.psstacks.opPop()==3)  
 
-    # def test_astore(self):
-    #     #1 2 3 4 True [0,0,0] astore
-    #     self.psstacks.opPush(1)
-    #     self.psstacks.opPush(2)
-    #     self.psstacks.opPush(3)
-    #     self.psstacks.opPush(4)
-    #     self.psstacks.opPush(True)
-    #     self.psstacks.opPush(ArrayValue([0,0,0]))  
-    #     self.psstacks.astore()
-    #     self.assertTrue(self.psstacks.opPop().value==[3,4,True] and self.psstacks.opPop()==2 and self.psstacks.opPop()==1)  
+    def test_astore(self):
+        #1 2 3 4 True [0,0,0] astore
+        self.psstacks.opPush(1)
+        self.psstacks.opPush(2)
+        self.psstacks.opPush(3)
+        self.psstacks.opPush(4)
+        self.psstacks.opPush(True)
+        self.psstacks.opPush(ArrayValue([0,0,0]))  
+        self.psstacks.astore()
+        self.assertTrue(self.psstacks.opPop().value==[3,4,True] and self.psstacks.opPop()==2 and self.psstacks.opPop()==1)  
 
     #-----------------------------------------------------
     #stack manipulation operator tests
@@ -272,64 +274,64 @@ class HW4Sampletests_part1(unittest.TestCase):
         self.psstacks.psDict()
         self.assertEqual(self.psstacks.opPop(),{})
 
-    # def test_psDef(self):
-    #     #/x 10 def /x 20 def x
-    #     self.psstacks.dictPush({})
-    #     self.psstacks.opPush("/x")
-    #     self.psstacks.opPush(10)
-    #     self.psstacks.psDef()
-    #     self.psstacks.opPush("/x")
-    #     self.psstacks.opPush(20)
-    #     self.psstacks.psDef()
-    #     self.assertEqual(self.psstacks.lookup('x'),20)
+    def test_psDef(self):
+        #/x 10 def /x 20 def x
+        self.psstacks.dictPush({})
+        self.psstacks.opPush("/x")
+        self.psstacks.opPush(10)
+        self.psstacks.psDef()
+        self.psstacks.opPush("/x")
+        self.psstacks.opPush(20)
+        self.psstacks.psDef()
+        self.assertEqual(self.psstacks.lookup('x'),20)
 
-    # def test_psDef2(self):
-    #     #/x 10 def 1 dict begin /y 20 def x
-    #     self.psstacks.dictPush({})
-    #     self.psstacks.opPush("/x")
-    #     self.psstacks.opPush(10)
-    #     self.psstacks.psDef()
-    #     self.psstacks.dictPush({})
-    #     self.psstacks.opPush("/y")
-    #     self.psstacks.opPush(20)
-    #     self.psstacks.psDef()
-    #     self.assertEqual(self.psstacks.lookup('x'),10)
+    def test_psDef2(self):
+        #/x 10 def 1 dict begin /y 20 def x
+        self.psstacks.dictPush({})
+        self.psstacks.opPush("/x")
+        self.psstacks.opPush(10)
+        self.psstacks.psDef()
+        self.psstacks.dictPush({})
+        self.psstacks.opPush("/y")
+        self.psstacks.opPush(20)
+        self.psstacks.psDef()
+        self.assertEqual(self.psstacks.lookup('x'),10)
 
-    # def test_beginEnd(self):
-    #     #/x 3 def 1 dict begin /x 4 def end x
-    #     self.psstacks.opPush(1)
-    #     self.psstacks.psDict()
-    #     self.psstacks.opPush("/x")
-    #     self.psstacks.opPush(3)
-    #     self.psstacks.psDef()
-    #     self.psstacks.opPush(1)
-    #     self.psstacks.psDict()
-    #     self.psstacks.begin()
-    #     self.psstacks.opPush("/x")
-    #     self.psstacks.opPush(4)
-    #     self.psstacks.psDef()
-    #     self.psstacks.end() 
-    #     self.assertEqual(self.psstacks.lookup('x'),3)
+    def test_beginEnd(self):
+        #/x 3 def 1 dict begin /x 4 def end x
+        self.psstacks.opPush(1)
+        self.psstacks.psDict()
+        self.psstacks.opPush("/x")
+        self.psstacks.opPush(3)
+        self.psstacks.psDef()
+        self.psstacks.opPush(1)
+        self.psstacks.psDict()
+        self.psstacks.begin()
+        self.psstacks.opPush("/x")
+        self.psstacks.opPush(4)
+        self.psstacks.psDef()
+        self.psstacks.end() 
+        self.assertEqual(self.psstacks.lookup('x'),3)
 
-    # def test_psDef3(self):
-    #     #/x 3 def 1 dict begin /x 30 def 1 dict begin /x 300 def end x
-    #     # define x in the bottom dictionary
-    #     self.psstacks.dictPush({})
-    #     self.psstacks.opPush("/x")
-    #     self.psstacks.opPush(3)
-    #     self.psstacks.psDef()
-    #     # define x in the second dictionary
-    #     self.psstacks.dictPush({})
-    #     self.psstacks.opPush("/x")
-    #     self.psstacks.opPush(30)
-    #     self.psstacks.psDef()
-    #     # define x in the third dictionary
-    #     self.psstacks.dictPush({})
-    #     self.psstacks.opPush("/x")
-    #     self.psstacks.opPush(300)
-    #     self.psstacks.psDef()
-    #     self.psstacks.dictPop()
-    #     self.assertEqual(self.psstacks.lookup('x'),30)
+    def test_psDef3(self):
+        #/x 3 def 1 dict begin /x 30 def 1 dict begin /x 300 def end x
+        # define x in the bottom dictionary
+        self.psstacks.dictPush({})
+        self.psstacks.opPush("/x")
+        self.psstacks.opPush(3)
+        self.psstacks.psDef()
+        # define x in the second dictionary
+        self.psstacks.dictPush({})
+        self.psstacks.opPush("/x")
+        self.psstacks.opPush(30)
+        self.psstacks.psDef()
+        # define x in the third dictionary
+        self.psstacks.dictPush({})
+        self.psstacks.opPush("/x")
+        self.psstacks.opPush(300)
+        self.psstacks.psDef()
+        self.psstacks.dictPop()
+        self.assertEqual(self.psstacks.lookup('x'),30)
 
 if __name__ == '__main__':
     unittest.main()
