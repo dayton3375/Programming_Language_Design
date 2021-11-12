@@ -199,70 +199,70 @@ class HW4Sampletests_part1(unittest.TestCase):
         isSame = self.psstacks.opPop() is self.psstacks.opPop()
         self.assertTrue(isSame)
 
-    # def test_exch(self):
-    #     # /x 10 exch
-    #     self.psstacks.opPush('/x')
-    #     self.psstacks.opPush(10)
-    #     self.psstacks.exch()
-    #     self.assertEqual(self.psstacks.opPop(),'/x')
-    #     self.assertEqual(self.psstacks.opPop(),10)
+    def test_exch(self):
+        # /x 10 exch
+        self.psstacks.opPush('/x')
+        self.psstacks.opPush(10)
+        self.psstacks.exch()
+        self.assertEqual(self.psstacks.opPop(),'/x')
+        self.assertEqual(self.psstacks.opPop(),10)
 
-    # def test_pop(self):
-    #     l1 = len(self.psstacks.opstack)
-    #     self.psstacks.opPush(10)
-    #     self.psstacks.pop()
-    #     l2 = len(self.psstacks.opstack)
-    #     self.assertEqual(l1,l2)
+    def test_pop(self):
+        l1 = len(self.psstacks.opstack)
+        self.psstacks.opPush(10)
+        self.psstacks.pop()
+        l2 = len(self.psstacks.opstack)
+        self.assertEqual(l1,l2)
 
     # def test_copy(self):
-    #     #true 1 3 4 3 copy
-    #     self.psstacks.opPush(True)
-    #     self.psstacks.opPush(1)
-    #     self.psstacks.opPush(3)
-    #     self.psstacks.opPush(4)
-    #     self.psstacks.opPush(3)
-    #     self.psstacks.copy()
-    #     self.assertTrue(self.psstacks.opPop()==4 and self.psstacks.opPop()==3 and self.psstacks.opPop()==1 and self.psstacks.opPop()==4 and self.psstacks.opPop()==3 and self.psstacks.opPop()==1 and self.psstacks.opPop()==True)
+        #true 1 3 4 3 copy
+        self.psstacks.opPush(True)
+        self.psstacks.opPush(1)
+        self.psstacks.opPush(3)
+        self.psstacks.opPush(4)
+        self.psstacks.opPush(3)
+        self.psstacks.copy()
+        self.assertTrue(self.psstacks.opPop()==4 and self.psstacks.opPop()==3 and self.psstacks.opPop()==1 and self.psstacks.opPop()==4 and self.psstacks.opPop()==3 and self.psstacks.opPop()==1 and self.psstacks.opPop()==True)
         
-    # def test_clear(self):
-    #     #10 /x clear
-    #     self.psstacks.opPush(10)
-    #     self.psstacks.opPush("/x")
-    #     self.psstacks.clear()
-    #     self.assertEqual(len(self.psstacks.opstack),0)
+    def test_clear(self):
+        #10 /x clear
+        self.psstacks.opPush(10)
+        self.psstacks.opPush("/x")
+        self.psstacks.clear()
+        self.assertEqual(len(self.psstacks.opstack),0)
 
-    # def test_roll1(self):
-    #     #1 2 3 4 5 6 7 8 6 4 roll
-    #     for i in range(1,9): # push 1 through 8 (8 is included)
-    #         self.psstacks.opPush(i)
-    #     self.psstacks.opPush(6) # roll top 6
-    #     self.psstacks.opPush(4) #roll 4 times ; clockwise
-    #     self.psstacks.roll()
-    #     print(self.psstacks.opstack)
-    #     self.assertEqual(self.psstacks.opPop(),4)
-    #     self.assertEqual(self.psstacks.opPop(),3)
-    #     self.assertEqual(self.psstacks.opPop(),8)
-    #     self.assertEqual(self.psstacks.opPop(),7)
-    #     self.assertEqual(self.psstacks.opPop(),6)
-    #     self.assertEqual(self.psstacks.opPop(),5)
-    #     self.assertEqual(self.psstacks.opPop(),2)
-    #     self.assertEqual(self.psstacks.opPop(),1)
+    def test_roll1(self):
+        #1 2 3 4 5 6 7 8 6 4 roll
+        for i in range(1,9): # push 1 through 8 (8 is included)
+            self.psstacks.opPush(i)
+        self.psstacks.opPush(6) # roll top 6
+        self.psstacks.opPush(4) #roll 4 times ; clockwise
+        self.psstacks.roll()
+        print(self.psstacks.opstack)
+        self.assertEqual(self.psstacks.opPop(),4)
+        self.assertEqual(self.psstacks.opPop(),3)
+        self.assertEqual(self.psstacks.opPop(),8)
+        self.assertEqual(self.psstacks.opPop(),7)
+        self.assertEqual(self.psstacks.opPop(),6)
+        self.assertEqual(self.psstacks.opPop(),5)
+        self.assertEqual(self.psstacks.opPop(),2)
+        self.assertEqual(self.psstacks.opPop(),1)
 
-    # def test_roll2(self):
-    #     #1 2 3 4 5 6 7 8 6 -4 roll
-    #     for i in range(1,9): # push 1 through 8 (8 is included)
-    #         self.psstacks.opPush(i)
-    #     self.psstacks.opPush(6) # roll top 6
-    #     self.psstacks.opPush(-4) #roll 4 times ; counter-clockwise
-    #     self.psstacks.roll()
-    #     self.assertEqual(self.psstacks.opPop(),6)
-    #     self.assertEqual(self.psstacks.opPop(),5)
-    #     self.assertEqual(self.psstacks.opPop(),4)
-    #     self.assertEqual(self.psstacks.opPop(),3)
-    #     self.assertEqual(self.psstacks.opPop(),8)
-    #     self.assertEqual(self.psstacks.opPop(),7)
-    #     self.assertEqual(self.psstacks.opPop(),2)
-    #     self.assertEqual(self.psstacks.opPop(),1)
+    def test_roll2(self):
+        #1 2 3 4 5 6 7 8 6 -4 roll
+        for i in range(1,9): # push 1 through 8 (8 is included)
+            self.psstacks.opPush(i)
+        self.psstacks.opPush(6) # roll top 6
+        self.psstacks.opPush(-4) #roll 4 times ; counter-clockwise
+        self.psstacks.roll()
+        self.assertEqual(self.psstacks.opPop(),6)
+        self.assertEqual(self.psstacks.opPop(),5)
+        self.assertEqual(self.psstacks.opPop(),4)
+        self.assertEqual(self.psstacks.opPop(),3)
+        self.assertEqual(self.psstacks.opPop(),8)
+        self.assertEqual(self.psstacks.opPop(),7)
+        self.assertEqual(self.psstacks.opPop(),2)
+        self.assertEqual(self.psstacks.opPop(),1)
         
     #-----------------------------------------------------
     #dictionary stack operators

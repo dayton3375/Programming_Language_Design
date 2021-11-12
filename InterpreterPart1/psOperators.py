@@ -244,14 +244,17 @@ class Operators:
     """
        This function implements the Postscript "pop operator". Calls self.opPop() to pop the top value from the opstack and discards the value. 
     """
-    def pop (self):
-        pass
+    def pop(self):
+        if len(self.opstack) > 0:
+            self.opstack.pop()
+        else:
+            print("Error: pop - opstack empty")
 
     """
        Prints the opstack. The end of the list is the top of the stack. 
     """
     def stack(self):
-        pass
+        print(self.opstack)
 
     """
        Copies the top element in opstack.
@@ -267,25 +270,49 @@ class Operators:
        Pops an integer count from opstack, copies count number of values in the opstack. 
     """
     def copy(self):
-        pass
+        if len(self.opstack) > 0:
+            num_elements = self.opstack.pop()
+            if len(self.opstack) >= num_elements:
+                i = 0
+                buflst = []
+                for op in reversed(self.opstack):
+                    buflst.append(op)
+                    i += 1
+                    if i >= num_elements:
+                        break
+                
+                for op in reversed(buflst):
+                    self.opPush(op)
+            else:
+                print("Error: copy - not enough elements on opstack")
+        else:
+            print("Error: copy - opstack empty")
 
     """
         Counts the number of elements in the opstack and pushes the count onto the top of the opstack.
     """
     def count(self):
-        pass
+        count = len(self.opstack)
+        self.opPush(count)
 
     """
        Clears the opstack.
     """
     def clear(self):
-        pass
+        if len(self.opstack) > 0:
+            self.opstack.clear()
         
     """
        swaps the top two elements in opstack
     """
     def exch(self):
-        pass
+        if len(self.opstack) >= 2:
+            op1 = self.opPop()
+            op2 = self.opPop()
+            self.opPush(op1)
+            self.opPush(op2)
+        else:
+            print("Error: exch - less than two elements on opstack")
 
     """
         Implements roll operator.
@@ -293,7 +320,16 @@ class Operators:
         Rolls the top m values in opstack n times (if n is positive roll clockwise, otherwise roll counter-clockwise)
     """
     def roll(self):
-        pass
+        if len(self.opstack) >= 2:
+            num_times = self.opPop()
+            num_elements = self.opPop()
+            l = []
+            for i in range(num_elements):
+                l.append(self.opPop())
+            result = l[num_times:] + l[:num_times]
+            
+            for op in reversed(result):
+                self.opPush(op)
 
     """
        Pops an integer from the opstack (size argument) and pushes an  empty dictionary onto the opstack.
