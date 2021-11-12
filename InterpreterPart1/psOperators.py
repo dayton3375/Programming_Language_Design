@@ -16,7 +16,10 @@ class Operators:
         Helper function. Pops the top value from opstack and returns it.
     """
     def opPop(self):
-        val = self.opstack.pop()
+        if len(self.opstack) > 0:
+            val = self.opstack.pop()
+        else:
+            val = None
         return val
 
     """
@@ -102,6 +105,8 @@ class Operators:
                 self.opPush(op2 - op1)
             else:
                 print("Error: sub - one of the operands is not a number value")
+        else:
+            print("Error: sub expects 2 operands")
 
     """
         Pops 2 values from opstack; checks if they are numerical (int); multiplies them; and pushes the result back to opstack. 
@@ -114,6 +119,8 @@ class Operators:
                 self.opPush(op1 * op2)
             else:
                 print("Error: mul - one of the operands is not a number value")
+        else:
+            print("Error: mul expects 2 operands")
 
     """
         Pops 2 values from stack; checks if they are int values; calculates the remainder of dividing the bottom value by the top one; 
@@ -127,6 +134,8 @@ class Operators:
                 self.opPush(op2 % op1)
             else:
                 print("Error: mod - one of the operands is not a number value")
+        else:
+            print("Error: mod expects 2 operands")
 
 
     #---------- Comparison Operators  -----------------
@@ -134,19 +143,34 @@ class Operators:
        Pops the top two values from the opstack; pushes "True" is they are equal, otherwise pushes "False"
     """ 
     def eq(self):
-        pass
+        if len(self.opstack) > 1:
+            op1 = self.opPop()
+            op2 = self.opPop()
+            self.opPush(op1 == op2)
+        else:
+            print("Error: eq expects 2 operands")
 
     """
        Pops the top two values from the opstack; pushes "True" if the bottom value is less than the top value, otherwise pushes "False"
     """ 
     def lt(self):
-        pass
+        if len(self.opstack) > 1:
+            op1 = self.opPop()
+            op2 = self.opPop()
+            self.opPush(op2 < op1)
+        else:
+            print("Error: lt expects 2 operands")
 
     """
        Pops the top two values from the opstack; pushes "True" if the bottom value is greater than the top value, otherwise pushes "False"
     """ 
     def gt(self):
-        pass
+        if len(self.opstack) > 1:
+            op1 = self.opPop()
+            op2 = self.opPop()
+            self.opPush(op2 > op1)
+        else:
+            print("Error: gt expects 2 operands")
 
     # ------- Array Operators --------------
     """ 
@@ -154,7 +178,15 @@ class Operators:
        The `length` method should support ArrayValue values.
     """
     def length(self):
-        pass
+        if len(self.opstack) > 0:
+            op = self.opPop()
+            if isinstance(op, ArrayValue):
+                size = len(op.value)
+                self.opPush(size)
+            else:
+                print("Error: length - top of stack not ArrayValue")
+        else:
+            print("Error: length - opstack empty")
 
     """ 
         Pops the `count` (int), an (zero-based) start `index`, and an array constant (ArrayValue) from the operand stack.  
@@ -162,7 +194,23 @@ class Operators:
         If the end index of the slice goes beyond the array length, will give an error. 
     """
     def getinterval(self):
-        pass
+        if len(self.opstack) > 2:
+            size = self.opPop()
+            index = self.opPop()
+            if (isinstance(size, int) and isinstance(index, int)):
+                array = self.opPop()
+                if isinstance(array, ArrayValue):
+                    if len(array.value) >= (index + size):
+                        slc = ArrayValue(array.value[index : index + size])
+                        self.opPush(slc)
+                    else:
+                        print("Error: getinterval - index out of bounds of array")
+                else:
+                    print("Error: getinterval - no ArrayValue on opstack")
+            else:
+                print("Error: getinterval - first two values on opstack are not integers")
+        else:
+            print("Error: getinterval - opstack doesn't have 3 or more values")
 
     """ 
         Pops an array constant (ArrayValue), start `index` (int), and another array constant (ArrayValue) from the operand stack.  
@@ -209,7 +257,11 @@ class Operators:
        Copies the top element in opstack.
     """
     def dup(self):
-        pass
+        if len(self.opstack) > 0:
+            val = self.opstack[-1]
+            self.opPush(val)
+        else:
+            print("Error: dup - opstack empty")
 
     """
        Pops an integer count from opstack, copies count number of values in the opstack. 

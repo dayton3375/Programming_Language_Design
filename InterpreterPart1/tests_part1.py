@@ -90,71 +90,71 @@ class HW4Sampletests_part1(unittest.TestCase):
         self.psstacks.eq()
         self.assertEqual(self.psstacks.opPop(),True)
 
-    # def test_eq2(self):
-    #     #[1 2 3 4] [1 2 3 4] eq
-    #     self.psstacks.opPush(ArrayValue([1,2,3,4]))
-    #     self.psstacks.opPush(ArrayValue([1,2,3,4]))
-    #     self.psstacks.eq()
-    #     self.assertEqual(self.psstacks.opPop(),False)
-    #     arr1 = ArrayValue([1,2,3,4])
-    #     self.psstacks.opPush(arr1)
-    #     self.psstacks.opPush(arr1)
-    #     self.psstacks.eq()
-    #     self.assertEqual(self.psstacks.opPop(),True)
+    def test_eq2(self):
+        #[1 2 3 4] [1 2 3 4] eq
+        self.psstacks.opPush(ArrayValue([1,2,3,4]))
+        self.psstacks.opPush(ArrayValue([1,2,3,4]))
+        self.psstacks.eq()
+        self.assertEqual(self.psstacks.opPop(),False)
+        arr1 = ArrayValue([1,2,3,4])
+        self.psstacks.opPush(arr1)
+        self.psstacks.opPush(arr1)
+        self.psstacks.eq()
+        self.assertEqual(self.psstacks.opPop(),True)
 
-    # def test_lt(self):
-    #     #3 6 lt
-    #     self.psstacks.opPush(3)
-    #     self.psstacks.opPush(6)
-    #     self.psstacks.lt()
-    #     self.assertEqual(self.psstacks.opPop(),True)
+    def test_lt(self):
+        #3 6 lt
+        self.psstacks.opPush(3)
+        self.psstacks.opPush(6)
+        self.psstacks.lt()
+        self.assertEqual(self.psstacks.opPop(),True)
 
-    # def test_gt(self):
-    #     #4 5 gt
-    #     self.psstacks.opPush(4)
-    #     self.psstacks.opPush(5)
-    #     self.psstacks.gt()
-    #     self.assertEqual(self.psstacks.opPop(),False)
+    def test_gt(self):
+        #4 5 gt
+        self.psstacks.opPush(4)
+        self.psstacks.opPush(5)
+        self.psstacks.gt()
+        self.assertEqual(self.psstacks.opPop(),False)
 
     #-----------------------------------------------------
     #Array operator tests
-    # def test_length(self):
-    #     #[3,5,5,3,2,2] length
-    #     self.psstacks.opPush(ArrayValue([3,5,5,3,2,2]))
-    #     self.psstacks.length()
-    #     self.assertEqual(self.psstacks.opPop(),6)      
-    #     self.assertTrue(len(self.psstacks.opstack)==0) 
-    #     #length will not push back the ArrayValue onto the opstack      
+    def test_length(self):
+        #[3,5,5,3,2,2] length
+        self.psstacks.opPush(ArrayValue([3,5,5,3,2,2]))
+        self.psstacks.length()
+        self.assertEqual(self.psstacks.opPop(),6)      
+        self.assertTrue(len(self.psstacks.opstack)==0) 
+        #length will not push back the ArrayValue onto the opstack      
 
-    # def test_getinterval(self):
-    #     #[0 1 2 3 [4 5 6] 7 True 8 9] 3 5 getinterval
-    #     self.psstacks.opPush(ArrayValue([0, 1, 2, 3, ArrayValue([4, 5, 6]), 7, True, 8, 9]))
-    #     self.psstacks.opPush(3)
-    #     self.psstacks.opPush(5)
-    #     self.psstacks.getinterval()
-    #     array =  self.psstacks.opPop() #pop the array slice
-    #     self.assertEqual(array.value[0], 3)
-    #     self.assertEqual(array.value[1].value, [4, 5, 6])
-    #     self.assertEqual(array.value[2:], [7, True, 8])
-    #     self.assertTrue(len(self.psstacks.opstack)==0)
-    #     #getinterval will not push back the original array onto the opstack 
+    def test_getinterval(self):
+        #[0 1 2 3 [4 5 6] 7 True 8 9] 3 5 getinterval
+        self.psstacks.opPush(ArrayValue([0, 1, 2, 3, ArrayValue([4, 5, 6]), 7, True, 8, 9]))
+        self.psstacks.opPush(3)
+        self.psstacks.opPush(5)
+        self.psstacks.getinterval()
+        array =  self.psstacks.opPop() #pop the array slice
+        self.assertEqual(array.value[0], 3)
+        self.assertEqual(array.value[1].value, [4, 5, 6])
+        self.assertEqual(array.value[2:], [7, True, 8])
+        self.assertTrue(len(self.psstacks.opstack)==0)
+        #getinterval will not push back the original array onto the opstack 
 
     # def test_putinterval1(self):
-    #     #[0 1 2 3 4 5 6 7] dup dup dup 3 [30 40 50 60] putinterval
-    #     arr1 = ArrayValue([0, 1, 2, 3, 4, 5, 6, 7] )
-    #     self.psstacks.opPush(arr1)
-    #     self.psstacks.dup()  # duplicating the array reference
-    #     self.psstacks.dup()  # duplicating the array reference
-    #     self.psstacks.opPush(3)
-    #     self.psstacks.opPush(ArrayValue([30, 40, 50, 60]))  # the slice that starts at index 3 will be replaced by [30 40 50 60]
-    #     self.psstacks.putinterval()  # putinterval will not push back the changed array onto the opstack 
-    #     arr2 = self.psstacks.opPop()  # we pop the string reference we copied with "dup"; 
-    #     self.assertTrue(arr2 is arr1)  # check if it the same object
-    #     self.assertEqual(arr2.value,[0, 1, 2, 30, 40, 50, 60, 7])  # we check if the ArrValue object value is updated
-    #     arr3 = self.psstacks.opPop()  # #we pop the string reference we copied with "dup";
-    #     self.assertTrue(arr3 is arr1)  # check if it the same object
-    #     self.assertEqual(arr3.value,[0, 1, 2, 30, 40, 50, 60, 7])  # we check if the ArrayValue object value is updated
-    #     self.assertTrue(len(self.psstacks.opstack)==0)
+        # #[0 1 2 3 4 5 6 7] dup dup dup 3 [30 40 50 60] putinterval
+        # arr1 = ArrayValue([0, 1, 2, 3, 4, 5, 6, 7] )
+        # self.psstacks.opPush(arr1)
+        # self.psstacks.dup()  # duplicating the array reference
+        # self.psstacks.dup()  # duplicating the array reference
+        # self.psstacks.opPush(3)
+        # self.psstacks.opPush(ArrayValue([30, 40, 50, 60]))  # the slice that starts at index 3 will be replaced by [30 40 50 60]
+        # self.psstacks.putinterval()  # putinterval will not push back the changed array onto the opstack 
+        # arr2 = self.psstacks.opPop()  # we pop the string reference we copied with "dup"; 
+        # self.assertTrue(arr2 is arr1)  # check if it the same object
+        # self.assertEqual(arr2.value,[0, 1, 2, 30, 40, 50, 60, 7])  # we check if the ArrValue object value is updated
+        # arr3 = self.psstacks.opPop()  # #we pop the string reference we copied with "dup";
+        # self.assertTrue(arr3 is arr1)  # check if it the same object
+        # self.assertEqual(arr3.value,[0, 1, 2, 30, 40, 50, 60, 7])  # we check if the ArrayValue object value is updated
+        # self.assertTrue(len(self.psstacks.opstack)==0)
 
     # def test_putinterval2(self):
     #     #/x [0 1 2 3 4 5 6 7] def x 3 [30 40 50 60] putinterval x
@@ -192,12 +192,12 @@ class HW4Sampletests_part1(unittest.TestCase):
 
     #-----------------------------------------------------
     #stack manipulation operator tests
-    # def test_dup(self):
-    #     #[3 5 5 True 4]  dup
-    #     self.psstacks.opPush(ArrayValue([3,5,5,True,4]))
-    #     self.psstacks.dup()
-    #     isSame = self.psstacks.opPop() is self.psstacks.opPop()
-    #     self.assertTrue(isSame)
+    def test_dup(self):
+        #[3 5 5 True 4]  dup
+        self.psstacks.opPush(ArrayValue([3,5,5,True,4]))
+        self.psstacks.dup()
+        isSame = self.psstacks.opPop() is self.psstacks.opPop()
+        self.assertTrue(isSame)
 
     # def test_exch(self):
     #     # /x 10 exch
