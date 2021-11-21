@@ -135,6 +135,15 @@ def read_expr(src):
         value = Name(token)
     #   if the token is an array delimiter (i.e., '['), get all tokens until the matching ']' delimiter and combine them as a Python list;
     #       create a Array object having this list value.
+    elif token == "[":
+        l = []
+        token = src.pop_first()
+
+        while token is not "]":
+            l.append(token)
+            token = src.pop_first()
+            
+        value = Array(l)
     #   if the token is a code-array delimiter (i.e., '{'), get all tokens until the matching '}' delimiter and combine them as a Python list;
     #       create a Block object having this list value.
     else:

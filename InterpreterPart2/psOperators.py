@@ -160,7 +160,7 @@ class Operators:
         if len(self.opstack) > 1:
             op1 = self.opPop()
             op2 = self.opPop()
-            self.opPush(op1 == op2)
+            self.opPush(op1 is op2)
         else:
             print("Error: eq expects 2 operands")
 

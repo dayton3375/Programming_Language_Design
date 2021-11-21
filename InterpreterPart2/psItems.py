@@ -76,8 +76,7 @@ class Array(Expr):
 
     # needs to be updated
     def evaluate(self, psstacks):
-        "TO-DO (part2)"
-        pass
+        psstacks.opPush(self.value)
 
     def __str__(self):
         return str(self.value)
@@ -107,8 +106,20 @@ class Name(Expr):
             psstacks.mul()
         elif self.value == "mod":
             psstacks.mod()
+        elif self.value == "eq":
+            psstacks.eq()
+        elif self.value == "lt":
+            psstacks.lt()
+        elif self.value == "gt":
+            psstacks.gt()
+        elif self.value == "dup":
+            psstacks.dup()
+        elif self.value == "def":
+            psstacks.psDef()
+        elif self.value[0] == '/':
+            psstacks.opPush(self.value)
         else:
-            raise SyntaxError("Error - Name.evaluate(), invalid name")
+            psstacks.opPush(psstacks.lookup(self.value))
 
     def __str__(self):
         return str(self.var_name)
