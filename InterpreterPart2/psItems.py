@@ -4,6 +4,9 @@ https://creativecommons.org/licenses/by-sa/3.0/
 """
 
 
+# from psOperators import Operators
+
+
 class Expr:
     """
     When you type input into this interpreter, it is parsed (read) into an expression. 
@@ -53,7 +56,7 @@ class Literal(Expr):
         self.value = value
 
     def evaluate(self, psstacks):
-        psstacks.push(self.value)
+        psstacks.opPush(self.value)
 
     def __str__(self):
         return str(self.value)
@@ -96,8 +99,16 @@ class Name(Expr):
         self.var_name = var_name
 
     def evaluate(self, psstacks):
-        "TO-DO (part2)"
-        pass
+        if self.value == "add":
+            psstacks.add()
+        elif self.value == "sub":
+            psstacks.sub()
+        elif self.value == "mul":
+            psstacks.mul()
+        elif self.value == "mod":
+            psstacks.mod()
+        else:
+            raise SyntaxError("Error - Name.evaluate(), invalid name")
 
     def __str__(self):
         return str(self.var_name)
