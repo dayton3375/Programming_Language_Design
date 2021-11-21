@@ -116,6 +116,13 @@ class Name(Expr):
             psstacks.dup()
         elif self.value == "def":
             psstacks.psDef()
+        elif self.value == "dict":
+            psstacks.psDict()
+        elif self.value == "begin":
+            psstacks.begin()
+        elif self.value == "end":
+            psstacks.end()
+        
         elif self.value[0] == '/':
             psstacks.opPush(self.value)
         else:

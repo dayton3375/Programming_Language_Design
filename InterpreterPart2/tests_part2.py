@@ -16,8 +16,8 @@ class HW4GradingTests(unittest.TestCase):
         self.opstack_output = {
             'test1': [6, 2],
             'test2': [True, True, False, True],
-            'test3': [1, 10]
-            # 'test4': [10, 1],
+            'test3': [1, 10],
+            'test4': [10, 1]
             # 'test5': [100, 10, 1],
             # 'test6': [2, 2],
             # 'test7': [ArrayValue([1, 2, 3, 4, 5, 6, 7])],
