@@ -53,8 +53,7 @@ class Literal(Expr):
         self.value = value
 
     def evaluate(self, psstacks):
-        "TO-DO (part2)"
-        pass
+        psstacks.push(self.value)
 
     def __str__(self):
         return str(self.value)

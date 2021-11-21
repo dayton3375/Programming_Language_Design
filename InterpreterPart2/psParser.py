@@ -128,7 +128,11 @@ def read_expr(src):
         raise SyntaxError('Incomplete expression')
     # TO-DO  - complete the following; include each condition as an `elif` case.
     #   if the token is a literal return a `Literal` object having `value` token.
+    elif is_literal(token):
+        value = Literal(token)
     #   if the token is a name, create a Name object having `var_name` token.
+    elif is_name(token):
+        value = Name(token)
     #   if the token is an array delimiter (i.e., '['), get all tokens until the matching ']' delimiter and combine them as a Python list;
     #       create a Array object having this list value.
     #   if the token is a code-array delimiter (i.e., '{'), get all tokens until the matching '}' delimiter and combine them as a Python list;
@@ -136,6 +140,8 @@ def read_expr(src):
     else:
         raise SyntaxError(
             "'{}' is not the start of an expression".format(token))
+    
+    return value
 
 
 """Parse an expression from a string. If the string does not contain an
