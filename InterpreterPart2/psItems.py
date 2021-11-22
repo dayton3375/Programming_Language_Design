@@ -114,16 +114,6 @@ class Name(Expr):
             psstacks.lt()
         elif self.value == "gt":
             psstacks.gt()
-        elif self.value == "dup":
-            psstacks.dup()
-        elif self.value == "def":
-            psstacks.psDef()
-        elif self.value == "dict":
-            psstacks.psDict()
-        elif self.value == "begin":
-            psstacks.begin()
-        elif self.value == "end":
-            psstacks.end()
         elif self.value == "length":
             psstacks.length()
         elif self.value == "getinterval":
@@ -136,6 +126,28 @@ class Name(Expr):
             psstacks.astore()
         elif self.value == "pop":
             psstacks.pop()
+        elif self.value == "stack":
+            psstacks.stack()
+        elif self.value == "dup":
+            psstacks.dup()
+        elif self.value == "copy":
+            psstacks.copy()
+        elif self.value == "count":
+            psstacks.count()
+        elif self.value == "clear":
+            psstacks.clear()
+        elif self.value == "exch":
+            psstacks.exch()
+        elif self.value == "roll":
+            psstacks.roll()
+        elif self.value == "dict":
+            psstacks.psDict()
+        elif self.value == "begin":
+            psstacks.begin()
+        elif self.value == "end":
+            psstacks.end()
+        elif self.value == "def":
+            psstacks.psDef()
         elif self.value[0] == '/':
             psstacks.opPush(self.value)
         else:
