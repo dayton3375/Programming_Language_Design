@@ -567,22 +567,22 @@ class HW4GradingTests(unittest.TestCase):
             self.assertTrue(self.compareObjectData(
                 self.psstacks.opstack[i], self.opstack_output[test_case][i]))
 
-    # def test_input31(self):
-    #     testinput31 = """
-    #             [ 1 2 3 4 5 6 7 8 9 ] 6 3 getinterval aload pop
-    #             [ 7 8 9 1 2 3 4 5 6 ] 0 3 getinterval aload pop
-    #             /x exch def /y exch def /z exch def
-    #             x eq count 1 roll y eq count 1 roll z eq count 1 roll
-    #         """
-    #     test_case = 'test{}'.format(31)
-    #     expr_list = read(testinput31)
-    #     for expr in expr_list:
-    #         expr.evaluate(self.psstacks)
-    #     self.assertEqual(len(self.psstacks.opstack),
-    #                      len(self.opstack_output[test_case]))
-    #     for i in range(0, len(self.opstack_output[test_case])):
-    #         self.assertTrue(self.compareObjectData(
-    #             self.psstacks.opstack[i], self.opstack_output[test_case][i]))
+    def test_input31(self):
+        testinput31 = """
+                [ 1 2 3 4 5 6 7 8 9 ] 6 3 getinterval aload pop
+                [ 7 8 9 1 2 3 4 5 6 ] 0 3 getinterval aload pop
+                /x exch def /y exch def /z exch def
+                x eq count 1 roll y eq count 1 roll z eq count 1 roll
+            """
+        test_case = 'test{}'.format(31)
+        expr_list = read(testinput31)
+        for expr in expr_list:
+            expr.evaluate(self.psstacks)
+        self.assertEqual(len(self.psstacks.opstack),
+                         len(self.opstack_output[test_case]))
+        for i in range(0, len(self.opstack_output[test_case])):
+            self.assertTrue(self.compareObjectData(
+                self.psstacks.opstack[i], self.opstack_output[test_case][i]))
 
 
 if __name__ == '__main__':
