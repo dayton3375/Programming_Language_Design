@@ -124,7 +124,8 @@ class Name(Expr):
             psstacks.begin()
         elif self.value == "end":
             psstacks.end()
-        
+        elif self.value == "length":
+            psstacks.length()
         elif self.value[0] == '/':
             psstacks.opPush(self.value)
         else:
