@@ -177,7 +177,11 @@ class Name(Expr):
         elif self.value[0] == '/':
             psstacks.opPush(self.value)
         else:
-            psstacks.opPush(psstacks.lookup(self.value))
+            val = psstacks.lookup(self.value)
+            if isinstance(val, FunctionValue):
+                val.apply(psstacks)
+            else:
+                psstacks.opPush(val)
 
     def __str__(self):
         return str(self.var_name)

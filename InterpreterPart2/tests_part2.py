@@ -395,38 +395,38 @@ class HW4GradingTests(unittest.TestCase):
             self.assertTrue(self.compareObjectData(
                 self.psstacks.opstack[i], self.opstack_output[test_case][i]))
 
-    # def test_input22(self):
-    #     testinput22 = """
-    #             /arr [1 2 3 4] def arr {dup mul } forall arr astore pop arr
-    #         """
-    #     test_case = 'test{}'.format(22)
-    #     expr_list = read(testinput22)
-    #     for expr in expr_list:
-    #         expr.evaluate(self.psstacks)
-    #     self.assertEqual(len(self.psstacks.opstack),
-    #                      len(self.opstack_output[test_case]))
-    #     for i in range(0, len(self.opstack_output[test_case])):
-    #         self.assertTrue(self.compareObjectData(
-    #             self.psstacks.opstack[i], self.opstack_output[test_case][i]))
+    def test_input22(self):
+        testinput22 = """
+                /arr [1 2 3 4] def arr {dup mul } forall arr astore pop arr
+            """
+        test_case = 'test{}'.format(22)
+        expr_list = read(testinput22)
+        for expr in expr_list:
+            expr.evaluate(self.psstacks)
+        self.assertEqual(len(self.psstacks.opstack),
+                         len(self.opstack_output[test_case]))
+        for i in range(0, len(self.opstack_output[test_case])):
+            self.assertTrue(self.compareObjectData(
+                self.psstacks.opstack[i], self.opstack_output[test_case][i]))
 
-    # def test_input23(self):
-    #     testinput23 = """
-    #             /x 4 def 
-    #             /square {dup mul} def
-    #             [x 1 x sub 1] /arr exch def  
-    #             arr 1 1 getinterval aload pop dup
-    #             0 gt 
-    #             {2 mul} {square} ifelse
-    #         """
-    #     test_case = 'test{}'.format(23)
-    #     expr_list = read(testinput23)
-    #     for expr in expr_list:
-    #         expr.evaluate(self.psstacks)
-    #     self.assertEqual(len(self.psstacks.opstack),
-    #                      len(self.opstack_output[test_case]))
-    #     for i in range(0, len(self.opstack_output[test_case])):
-    #         self.assertTrue(self.compareObjectData(
-    #             self.psstacks.opstack[i], self.opstack_output[test_case][i]))
+    def test_input23(self):
+        testinput23 = """
+                /x 4 def 
+                /square {dup mul} def
+                [x 1 x sub 1] /arr exch def  
+                arr 1 1 getinterval aload pop dup
+                0 gt 
+                {2 mul} {square} ifelse
+            """
+        test_case = 'test{}'.format(23)
+        expr_list = read(testinput23)
+        for expr in expr_list:
+            expr.evaluate(self.psstacks)
+        self.assertEqual(len(self.psstacks.opstack),
+                         len(self.opstack_output[test_case]))
+        for i in range(0, len(self.opstack_output[test_case])):
+            self.assertTrue(self.compareObjectData(
+                self.psstacks.opstack[i], self.opstack_output[test_case][i]))
 
     # def test_input24(self):
     #     testinput24 = """

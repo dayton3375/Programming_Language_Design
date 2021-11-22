@@ -439,8 +439,11 @@ class Operators:
         if len(self.opstack) > 1:
             ifBody = self.opPop()
             condition = self.opPop()
-            condition.apply(self)
-            result = self.opPop()
+            if condition is not False and condition is not True:
+                condition.apply(self)
+                result = self.opPop()
+            else:
+                result = condition
             if result == True:
                 ifBody.apply(self)
         else:
@@ -456,8 +459,11 @@ class Operators:
             elseBody = self.opPop()
             ifBody = self.opPop()
             condition = self.opPop()
-            condition.apply(self)
-            result = self.opPop()
+            if condition is not False and condition is not True:
+                condition.apply(self)
+                result = self.opPop()
+            else:
+                result = condition
             if result == True:
                 ifBody.apply(self)
             else:
