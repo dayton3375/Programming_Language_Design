@@ -132,6 +132,8 @@ class Name(Expr):
             psstacks.putinterval()
         elif self.value == "aload":
             psstacks.aload()
+        elif self.value == "astore":
+            psstacks.astore()
         elif self.value == "pop":
             psstacks.pop()
         elif self.value[0] == '/':
