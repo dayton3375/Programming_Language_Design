@@ -435,10 +435,16 @@ class Operators:
        Pops the `ifbody` and the `condition` from opstack. 
        If the condition is True, evaluates the `ifbody`.  
     """
-
     def psIf(self):
-        pass
-        # TO-DO in part2
+        if len(self.opstack) > 2:
+            ifBody = self.opPop()
+            condition = self.opPop()
+            condition.apply(self)
+            result = self.opPop()
+            if result == True:
+                ifBody.apply(self)
+        else:
+            print("Error: psIf - not enough elements in opstack")
 
     """
        Implements ifelse operator. 

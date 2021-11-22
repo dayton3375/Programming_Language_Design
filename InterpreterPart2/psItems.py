@@ -5,7 +5,25 @@ https://creativecommons.org/licenses/by-sa/3.0/
 
 
 # from psOperators import Operators
+""" Copied these from psParser.py since there was a circular error when
+importing them from psParser.py"""
 
+def is_literal(s):
+    return isinstance(s, int) or isinstance(s, float) or isinstance(s, bool)
+
+
+""" Checks if the given token is an array object. """
+def is_object(s):
+    return (isinstance(s, list))
+
+
+""" Checks if the given token is a variable or function name. 
+    The name can either be: 
+    - a name constant (where the first character is /) or 
+    - a variable (or function)  """
+def is_name(s):
+    DELIMITERS = set('(){}[]')
+    return isinstance(s, str) and s not in DELIMITERS
 
 
 class Expr:
@@ -148,6 +166,14 @@ class Name(Expr):
             psstacks.end()
         elif self.value == "def":
             psstacks.psDef()
+        elif self.value == "if":
+            psstacks.psIf()
+        elif self.value == "ifelse":
+            psstacks.psIfelse()
+        elif self.value == "repeat":
+            psstacks.repeat()
+        elif self.value == "forall":
+            psstacks.forall()
         elif self.value[0] == '/':
             psstacks.opPush(self.value)
         else:
@@ -172,8 +198,8 @@ class Block(Expr):
         self.value = value
 
     def evaluate(self, psstacks):
-        "TO-DO (part2)"
-        pass
+        val = FunctionValue(self.value)
+        psstacks.opPush(val)
 
     def __str__(self):
         return str(self.value)
@@ -238,21 +264,13 @@ class ArrayValue(Value):
 
     def __str__(self):
         return "{}({})".format(type(self).__name__, self.value)
-        # return str(self.value)
 
     def evaluate(self, psstacks):
         initialStackSize = len(psstacks.opstack)
         buf = []
 
         for elem in self.value:
-            if is_literal(elem):
-                buf.append(Literal(elem))
-            elif is_name(elem):
-                buf.append(Name(elem))
-            elif is_object(elem):
-                buf.append(Array(elem))
-            else:
-                raise SyntaxError('Error - ArrayValue.evaluate(), element does not fit any known catagory')
+            buf.append(elem)
 
         for elem in buf:
             elem.evaluate(psstacks)
@@ -282,35 +300,8 @@ class FunctionValue(Value):
         self.body = body
 
     def apply(self, psstacks):
-        # TO-DO in part2
-        pass
+        for exp in self.value:
+            exp.evaluate(psstacks)
 
     def __str__(self):
         return '<function {}>'.format(self.body)
-
-
-
-""" Copied these from psParser.py since there was a circular error when
-importing them from psParser.py"""
-
-def is_literal(s):
-    return isinstance(s, int) or isinstance(s, float) or isinstance(s, bool)
-
-
-""" Checks if the given token is an array object. """
-
-
-def is_object(s):
-    return (isinstance(s, list))
-
-
-""" Checks if the given token is a variable or function name. 
-    The name can either be: 
-    - a name constant (where the first character is /) or 
-    - a variable (or function)  """
-
-
-def is_name(s):
-    return isinstance(s, str) and s not in DELIMITERS
-
-DELIMITERS = set('(){}[]')

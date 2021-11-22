@@ -21,8 +21,6 @@ BOOLEANS = set(['true', 'false'])
 
 """Splits the string s into tokens and returns a list of them.
 >>> tokenize('/addsq { /sq {dup mul} def sq exch sq add exch sq add } def  2 3 4 addsq')  """
-
-
 def tokenize(s):
     src = Buffer(s)
     tokens = []
@@ -35,8 +33,6 @@ def tokenize(s):
 
 
 """ Takes allowed characters only. Filters out everything else.  """
-
-
 def take(src, allowed_characters):
     result = ''
     while src.current() in allowed_characters:
@@ -45,8 +41,6 @@ def take(src, allowed_characters):
 
 
 """Returns the next token from the given Buffer object. """
-
-
 def next_token(src):
     take(src, WHITESPACE)  # skip whitespace
     c = src.current()
@@ -81,15 +75,11 @@ def next_token(src):
 
 
 """ Checks if the given token is a literal - primitive constant value. """
-
-
 def is_literal(s):
     return isinstance(s, int) or isinstance(s, float) or isinstance(s, bool)
 
 
 """ Checks if the given token is an array object. """
-
-
 def is_object(s):
     return (isinstance(s, list))
 
@@ -98,15 +88,11 @@ def is_object(s):
     The name can either be: 
     - a name constant (where the first character is /) or 
     - a variable (or function)  """
-
-
 def is_name(s):
     return isinstance(s, str) and s not in DELIMITERS
 
 
 """ Returns the constant array or code array enclosed within matching [] or  {} paranthesis. delimiter is either ']' or '}' """
-
-
 def read_block_expr(src, delimiter):
     s = []
     while src.current() != delimiter:
@@ -120,26 +106,30 @@ def read_block_expr(src, delimiter):
 
 
 """ Converts the next token in the given Buffer to an expression. """
-
-
 def read_expr(src):
     token = src.pop_first()
     if token is None:
         raise SyntaxError('Incomplete expression')
+
     # TO-DO  - complete the following; include each condition as an `elif` case.
     #   if the token is a literal return a `Literal` object having `value` token.
     elif is_literal(token):
         value = Literal(token)
+
     #   if the token is a name, create a Name object having `var_name` token.
     elif is_name(token):
         value = Name(token)
+
     #   if the token is an array delimiter (i.e., '['), get all tokens until the matching ']' delimiter and combine them as a Python list;
     #       create a Array object having this list value.
-    elif token == "[":
-        l = getList(src)
-        value = Array(l)
+    elif token == '[':
+        value = getList(src)
+
     #   if the token is a code-array delimiter (i.e., '{'), get all tokens until the matching '}' delimiter and combine them as a Python list;
     #       create a Block object having this list value.
+    elif token == '{':
+        value = getBlock(src)
+
     else:
         raise SyntaxError(
             "'{}' is not the start of an expression".format(token))
@@ -151,21 +141,44 @@ def getList(src):
     l = []
     token = src.pop_first()
 
-    while token is not ']':
-        if token is '[':    # when there's a list within a list
+    while token != ']':
+        if token == '{':
+            l.append(getBlock(src))
+        elif is_literal(token):
+            l.append(Literal(token))
+        elif is_name(token):
+            l.append(Name(token))
+        elif token == '[':
             l.append(getList(src))
         else:
-            l.append(token)
+            raise SyntaxError("Error getBlock() - unknown symbol")
         token = src.pop_first()
 
-    return l
+    return Array(l)
+
+def getBlock(src):
+    l = []
+    token = src.pop_first()
+
+    while token != '}':
+        if token == '{':
+            l.append(getBlock(src))
+        elif is_literal(token):
+            l.append(Literal(token))
+        elif is_name(token):
+            l.append(Name(token))
+        elif token == '[':
+            l.append(getList(token))
+        else:
+            raise SyntaxError("Error getBlock() - unknown symbol")
+        token = src.pop_first()
+
+    return Block(l)
 
 """Parse an expression from a string. If the string does not contain an
    expression, None is returned. If the string cannot be parsed, a SyntaxError
    is raised.
 """
-
-
 def read(s):
     # reading one token at a time
     src = Buffer(tokenize(s))

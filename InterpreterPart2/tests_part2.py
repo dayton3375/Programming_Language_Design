@@ -339,19 +339,19 @@ class HW4GradingTests(unittest.TestCase):
             self.assertTrue(self.compareObjectData(
                 self.psstacks.opstack[i], self.opstack_output[test_case][i]))
 
-    # def test_input18(self):
-    #     testinput18 = """
-    #             /isNeg { 0 lt } def  -5 dup isNeg { -1 mul } if
-    #         """
-    #     test_case = 'test{}'.format(18)
-    #     expr_list = read(testinput18)
-    #     for expr in expr_list:
-    #         expr.evaluate(self.psstacks)
-    #     self.assertEqual(len(self.psstacks.opstack),
-    #                      len(self.opstack_output[test_case]))
-    #     for i in range(0, len(self.opstack_output[test_case])):
-    #         self.assertTrue(self.compareObjectData(
-    #             self.psstacks.opstack[i], self.opstack_output[test_case][i]))
+    def test_input18(self):
+        testinput18 = """
+                /isNeg { 0 lt } def  -5 dup isNeg { -1 mul } if
+            """
+        test_case = 'test{}'.format(18)
+        expr_list = read(testinput18)
+        for expr in expr_list:
+            expr.evaluate(self.psstacks)
+        self.assertEqual(len(self.psstacks.opstack),
+                         len(self.opstack_output[test_case]))
+        for i in range(0, len(self.opstack_output[test_case])):
+            self.assertTrue(self.compareObjectData(
+                self.psstacks.opstack[i], self.opstack_output[test_case][i]))
 
     # def test_input19(self):
     #     testinput19 = """
