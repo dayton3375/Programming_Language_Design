@@ -297,19 +297,19 @@ class HW4GradingTests(unittest.TestCase):
             self.assertTrue(self.compareObjectData(
                 self.psstacks.opstack[i], self.opstack_output[test_case][i]))
 
-    # def test_input15(self):
-    #     testinput15 = """
-    #             1 2 3 4 5 3 copy count
-    #         """
-    #     test_case = 'test{}'.format(15)
-    #     expr_list = read(testinput15)
-    #     for expr in expr_list:
-    #         expr.evaluate(self.psstacks)
-    #     self.assertEqual(len(self.psstacks.opstack),
-    #                      len(self.opstack_output[test_case]))
-    #     for i in range(0, len(self.opstack_output[test_case])):
-    #         self.assertTrue(self.compareObjectData(
-    #             self.psstacks.opstack[i], self.opstack_output[test_case][i]))
+    def test_input15(self):
+        testinput15 = """
+                1 2 3 4 5 3 copy count
+            """
+        test_case = 'test{}'.format(15)
+        expr_list = read(testinput15)
+        for expr in expr_list:
+            expr.evaluate(self.psstacks)
+        self.assertEqual(len(self.psstacks.opstack),
+                         len(self.opstack_output[test_case]))
+        for i in range(0, len(self.opstack_output[test_case])):
+            self.assertTrue(self.compareObjectData(
+                self.psstacks.opstack[i], self.opstack_output[test_case][i]))
 
     # def test_input16(self):
     #     testinput16 = """
