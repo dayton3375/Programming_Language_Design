@@ -260,7 +260,7 @@ class Operators:
                 self.opPush(val)
             self.opPush(ar)
         else:
-            print("Error: putinterval - opstack is empty")
+            print("Error: aload - opstack is empty")
 
     """ 
         Pops an array constant (ArrayValue) from the operand stack.  
@@ -279,9 +279,9 @@ class Operators:
                     ar.value.insert(0, self.opPop())
                 self.opPush(ar)
             else:
-                print("Error: putinterval - opstack doesn't have enough elements")
+                print("Error: astore - opstack doesn't have enough elements")
         else:
-            print("Error: putinterval - opstack is empty")
+            print("Error: astore - opstack is empty")
 
     # ------- Stack Manipulation and Print Operators --------------
 

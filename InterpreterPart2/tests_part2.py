@@ -19,8 +19,8 @@ class HW4GradingTests(unittest.TestCase):
             'test3': [1, 10],
             'test4': [10, 1],
             'test5': [100, 10, 1],
-            'test6': [2, 2]
-            # 'test7': [ArrayValue([1, 2, 3, 4, 5, 6, 7])],
+            'test6': [2, 2],
+            'test7': [ArrayValue([1, 2, 3, 4, 5, 6, 7])]
             # 'test8': [ArrayValue([1, 2, 3, 4, 5, ArrayValue([6, 3, 4]), ArrayValue([True])])],
             # 'test9': [4, 6],
             # 'test10': [ArrayValue([4, 5, 6]), ArrayValue([8, 9, 10])],
@@ -177,21 +177,21 @@ class HW4GradingTests(unittest.TestCase):
             self.assertTrue(self.compareObjectData(
                 self.psstacks.opstack[i], self.opstack_output[test_case][i]))
 
-    # def test_input7(self):
-    #     testinput7 = """
-    #         /x 3 def 
-    #         /y 4 def
-    #         [1 2 x x 1 add 5 x x add x y add ] 
-    #     """
-    #     test_case = 'test{}'.format(7)
-    #     expr_list = read(testinput7)
-    #     for expr in expr_list:
-    #         expr.evaluate(self.psstacks)
-    #     self.assertEqual(len(self.psstacks.opstack),
-    #                      len(self.opstack_output[test_case]))
-    #     for i in range(0, len(self.opstack_output[test_case])):
-    #         self.assertTrue(self.compareObjectData(
-    #             self.psstacks.opstack[i], self.opstack_output[test_case][i]))
+    def test_input7(self):
+        testinput7 = """
+            /x 3 def 
+            /y 4 def
+            [1 2 x x 1 add 5 x x add x y add ] 
+        """
+        test_case = 'test{}'.format(7)
+        expr_list = read(testinput7)
+        for expr in expr_list:
+            expr.evaluate(self.psstacks)
+        self.assertEqual(len(self.psstacks.opstack),
+                         len(self.opstack_output[test_case]))
+        for i in range(0, len(self.opstack_output[test_case])):
+            self.assertTrue(self.compareObjectData(
+                self.psstacks.opstack[i], self.opstack_output[test_case][i]))
 
     # def test_input8(self):
     #     testinput8 = """

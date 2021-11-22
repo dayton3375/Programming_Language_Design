@@ -7,6 +7,7 @@ https://creativecommons.org/licenses/by-sa/3.0/
 # from psOperators import Operators
 
 
+
 class Expr:
     """
     When you type input into this interpreter, it is parsed (read) into an expression. 
@@ -74,9 +75,10 @@ class Array(Expr):
         Expr.__init__(self, value)
         self.value = value
 
-    # needs to be updated
     def evaluate(self, psstacks):
-        psstacks.opPush(self.value)
+        val = ArrayValue(self.value)
+        val.evaluate(psstacks)
+        psstacks.opPush(val)
 
     def __str__(self):
         return str(self.value)
@@ -215,6 +217,41 @@ class ArrayValue(Value):
         return "{}({})".format(type(self).__name__, self.value)
         # return str(self.value)
 
+    def evaluate(self, psstacks):
+        # save everything currently on opstack
+        bufstack = []
+        while len(psstacks.opstack) > 0:
+            bufstack.append(psstacks.opPop())
+        
+        buf = []
+
+        for elem in self.value:
+            if is_literal(elem):
+                buf.append(Literal(elem))
+            elif is_name(elem):
+                buf.append(Name(elem))
+            elif is_object(elem):
+                buf.append(Array(elem))
+            else:
+                raise SyntaxError('Error - ArrayValue.evaluate(), element does not fit any known catagory')
+
+        for elem in buf:
+            elem.evaluate(psstacks)
+        buf.clear()
+        self.value.clear()
+
+        while len(psstacks.opstack) > 0:
+            buf.append(psstacks.opPop())
+
+        # restore previous opstack
+        while len(bufstack) > 0:
+            psstacks.opPush(bufstack.pop())
+
+        # fill array with evaluated values
+        for l in reversed(buf):
+            self.value.append(l)
+
+
 # ------------------------------------------------------------
 
 
@@ -235,3 +272,30 @@ class FunctionValue(Value):
 
     def __str__(self):
         return '<function {}>'.format(self.body)
+
+
+
+""" Copied these from psParser.py since there was a circular error when
+importing them from psParser.py"""
+
+def is_literal(s):
+    return isinstance(s, int) or isinstance(s, float) or isinstance(s, bool)
+
+
+""" Checks if the given token is an array object. """
+
+
+def is_object(s):
+    return (isinstance(s, list))
+
+
+""" Checks if the given token is a variable or function name. 
+    The name can either be: 
+    - a name constant (where the first character is /) or 
+    - a variable (or function)  """
+
+
+def is_name(s):
+    return isinstance(s, str) and s not in DELIMITERS
+
+DELIMITERS = set('(){}[]')
