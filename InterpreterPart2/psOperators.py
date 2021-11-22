@@ -451,10 +451,19 @@ class Operators:
        Pops the `elsebody`, `ifbody`, and the condition from opstack. 
        If the condition is True, evaluate `ifbody`, otherwise evaluate `elsebody`. 
     """
-
     def psIfelse(self):
-        pass
-        # TO-DO in part2
+        if len(self.opstack) > 3:
+            elseBody = self.opPop()
+            ifBody = self.opPop()
+            condition = self.opPop()
+            condition.apply(self)
+            result = self.opPop()
+            if result == True:
+                ifBody.apply(self)
+            else:
+                elseBody.apply(self)
+        else:
+            print("Error: psIfelse - not enough elements in opstack")
 
     # ------- Loop Operators --------------
     """
