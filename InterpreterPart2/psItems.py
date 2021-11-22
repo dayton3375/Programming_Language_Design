@@ -128,6 +128,8 @@ class Name(Expr):
             psstacks.length()
         elif self.value == "getinterval":
             psstacks.getinterval()
+        elif self.value == "putinterval":
+            psstacks.putinterval()
         elif self.value[0] == '/':
             psstacks.opPush(self.value)
         else:
