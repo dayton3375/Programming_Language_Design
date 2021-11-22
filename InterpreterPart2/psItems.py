@@ -218,11 +218,7 @@ class ArrayValue(Value):
         # return str(self.value)
 
     def evaluate(self, psstacks):
-        # save everything currently on opstack
-        bufstack = []
-        while len(psstacks.opstack) > 0:
-            bufstack.append(psstacks.opPop())
-        
+        initialStackSize = len(psstacks.opstack)
         buf = []
 
         for elem in self.value:
@@ -240,12 +236,8 @@ class ArrayValue(Value):
         buf.clear()
         self.value.clear()
 
-        while len(psstacks.opstack) > 0:
+        while len(psstacks.opstack) > initialStackSize:
             buf.append(psstacks.opPop())
-
-        # restore previous opstack
-        while len(bufstack) > 0:
-            psstacks.opPush(bufstack.pop())
 
         # fill array with evaluated values
         for l in reversed(buf):

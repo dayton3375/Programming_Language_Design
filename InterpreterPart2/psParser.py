@@ -136,13 +136,7 @@ def read_expr(src):
     #   if the token is an array delimiter (i.e., '['), get all tokens until the matching ']' delimiter and combine them as a Python list;
     #       create a Array object having this list value.
     elif token == "[":
-        l = []
-        token = src.pop_first()
-
-        while token is not "]":
-            l.append(token)
-            token = src.pop_first()
-            
+        l = getList(src)
         value = Array(l)
     #   if the token is a code-array delimiter (i.e., '{'), get all tokens until the matching '}' delimiter and combine them as a Python list;
     #       create a Block object having this list value.
@@ -152,6 +146,19 @@ def read_expr(src):
     
     return value
 
+
+def getList(src):
+    l = []
+    token = src.pop_first()
+
+    while token is not ']':
+        if token is '[':    # when there's a list within a list
+            l.append(getList(src))
+        else:
+            l.append(token)
+        token = src.pop_first()
+
+    return l
 
 """Parse an expression from a string. If the string does not contain an
    expression, None is returned. If the string cannot be parsed, a SyntaxError

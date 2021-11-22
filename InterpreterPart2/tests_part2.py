@@ -20,31 +20,31 @@ class HW4GradingTests(unittest.TestCase):
             'test4': [10, 1],
             'test5': [100, 10, 1],
             'test6': [2, 2],
-            'test7': [ArrayValue([1, 2, 3, 4, 5, 6, 7])]
-            # 'test8': [ArrayValue([1, 2, 3, 4, 5, ArrayValue([6, 3, 4]), ArrayValue([True])])],
-            # 'test9': [4, 6],
-            # 'test10': [ArrayValue([4, 5, 6]), ArrayValue([8, 9, 10])],
-            # 'test11': [ArrayValue([1, 2, 3, 40, 50, 60, 70, 8, 9, 10]), ArrayValue([1, 2, 3, 4, 5, 6, 40, 50, 60, 70])],
-            # 'test12': [True],
-            # 'test13': [1, 2, ArrayValue([3, 4, 5, 6])],
-            # 'test14': [ArrayValue([1, 2, 3, 4]), False],
-            # 'test15': [1, 2, 3, 4, 5, 3, 4, 5, 8],
-            # 'test16': [1, 2, 6, 7, 8, 9, 3, 4, 5],
-            # 'test17': [1, 2, 7, 8, 9, 3, 4, 5, 6],
-            # 'test18': [5],
-            # 'test19': [2],
-            # 'test20': [256],
-            # 'test21': [1, 4, 9, 16],
-            # 'test22': [ArrayValue([1, 4, 9, 16])],
-            # 'test23': [9],
-            # 'test24': [10],
-            # 'test25': [10, 3, 10, 20, 1, 2],
-            # 'test26': [True],
-            # 'test27': [False, True, 10],
-            # 'test28': [120],
-            # 'test29': [720],
-            # 'test30': [30],
-            # 'test31': [True, True, True]
+            'test7': [ArrayValue([1, 2, 3, 4, 5, 6, 7])],
+            'test8': [ArrayValue([1, 2, 3, 4, 5, ArrayValue([6, 3, 4]), ArrayValue([True])])],
+            'test9': [4, 6],
+            'test10': [ArrayValue([4, 5, 6]), ArrayValue([8, 9, 10])],
+            'test11': [ArrayValue([1, 2, 3, 40, 50, 60, 70, 8, 9, 10]), ArrayValue([1, 2, 3, 4, 5, 6, 40, 50, 60, 70])],
+            'test12': [True],
+            'test13': [1, 2, ArrayValue([3, 4, 5, 6])],
+            'test14': [ArrayValue([1, 2, 3, 4]), False],
+            'test15': [1, 2, 3, 4, 5, 3, 4, 5, 8],
+            'test16': [1, 2, 6, 7, 8, 9, 3, 4, 5],
+            'test17': [1, 2, 7, 8, 9, 3, 4, 5, 6],
+            'test18': [5],
+            'test19': [2],
+            'test20': [256],
+            'test21': [1, 4, 9, 16],
+            'test22': [ArrayValue([1, 4, 9, 16])],
+            'test23': [9],
+            'test24': [10],
+            'test25': [10, 3, 10, 20, 1, 2],
+            'test26': [True],
+            'test27': [False, True, 10],
+            'test28': [120],
+            'test29': [720],
+            'test30': [30],
+            'test31': [True, True, True]
             }
 
     def compareObjectData(self, obj1, obj2):
@@ -193,21 +193,21 @@ class HW4GradingTests(unittest.TestCase):
             self.assertTrue(self.compareObjectData(
                 self.psstacks.opstack[i], self.opstack_output[test_case][i]))
 
-    # def test_input8(self):
-    #     testinput8 = """
-    #         /x 3 def 
-    #         /y 4 def
-    #         [1 2 x x 1 add 5 [x x add x y] [true]] 
-    #     """
-    #     test_case = 'test{}'.format(8)
-    #     expr_list = read(testinput8)
-    #     for expr in expr_list:
-    #         expr.evaluate(self.psstacks)
-    #     self.assertEqual(len(self.psstacks.opstack),
-    #                      len(self.opstack_output[test_case]))
-    #     for i in range(0, len(self.opstack_output[test_case])):
-    #         self.assertTrue(self.compareObjectData(
-    #             self.psstacks.opstack[i], self.opstack_output[test_case][i]))
+    def test_input8(self):
+        testinput8 = """
+            /x 3 def 
+            /y 4 def
+            [1 2 x x 1 add 5 [x x add x y] [true]] 
+        """
+        test_case = 'test{}'.format(8)
+        expr_list = read(testinput8)
+        for expr in expr_list:
+            expr.evaluate(self.psstacks)
+        self.assertEqual(len(self.psstacks.opstack),
+                         len(self.opstack_output[test_case]))
+        for i in range(0, len(self.opstack_output[test_case])):
+            self.assertTrue(self.compareObjectData(
+                self.psstacks.opstack[i], self.opstack_output[test_case][i]))
 
     # def test_input9(self):
     #     testinput9 = """
