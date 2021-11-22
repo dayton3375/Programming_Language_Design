@@ -436,7 +436,7 @@ class Operators:
        If the condition is True, evaluates the `ifbody`.  
     """
     def psIf(self):
-        if len(self.opstack) > 2:
+        if len(self.opstack) > 1:
             ifBody = self.opPop()
             condition = self.opPop()
             condition.apply(self)
@@ -452,7 +452,7 @@ class Operators:
        If the condition is True, evaluate `ifbody`, otherwise evaluate `elsebody`. 
     """
     def psIfelse(self):
-        if len(self.opstack) > 3:
+        if len(self.opstack) > 2:
             elseBody = self.opPop()
             ifBody = self.opPop()
             condition = self.opPop()
@@ -473,7 +473,7 @@ class Operators:
        Will be completed in part-2. 
     """
     def repeat(self):
-        if len(self.opstack) > 2:
+        if len(self.opstack) > 1:
             body = self.opPop()
             count = self.opPop()
             
@@ -488,10 +488,17 @@ class Operators:
        Evaluates (applies) the `codearray` on every value in the `array`.  
        Will be completed in part-2. 
     """
-
     def forall(self):
-        pass
-        # TO-DO in part2
+        if len(self.opstack) > 1:
+            codeArray = self.opPop()
+            array = self.opPop()
+            
+            for elem in array.value:
+                self.opPush(elem)
+                codeArray.apply(self)
+
+        else:
+            print("Error: forall - not enough elements in opstack")
 
     # --- used in the setup of unittests
     def clearBoth(self):
