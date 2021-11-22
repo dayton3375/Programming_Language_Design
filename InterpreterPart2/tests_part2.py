@@ -44,7 +44,12 @@ class HW4GradingTests(unittest.TestCase):
             'test28': [120],
             'test29': [720],
             'test30': [30],
-            'test31': [True, True, True]
+            'test31': [True, True, True],
+            'test32': [9],
+            'test33': [18],
+            'test34': [-99],
+            'test35': [35,35,35,35],
+            'test36': [1,2,3,4]
             }
 
     def compareObjectData(self, obj1, obj2):
@@ -576,6 +581,80 @@ class HW4GradingTests(unittest.TestCase):
             """
         test_case = 'test{}'.format(31)
         expr_list = read(testinput31)
+        for expr in expr_list:
+            expr.evaluate(self.psstacks)
+        self.assertEqual(len(self.psstacks.opstack),
+                         len(self.opstack_output[test_case]))
+        for i in range(0, len(self.opstack_output[test_case])):
+            self.assertTrue(self.compareObjectData(
+                self.psstacks.opstack[i], self.opstack_output[test_case][i]))
+
+    def test_input32(self):
+        testinput32 = """
+                /blk1 {1 2 add} def
+                /blk2 {1 2 add} def
+                blk1 blk2 mul
+            """
+        test_case = 'test{}'.format(32)
+        expr_list = read(testinput32)
+        for expr in expr_list:
+            expr.evaluate(self.psstacks)
+        self.assertEqual(len(self.psstacks.opstack),
+                         len(self.opstack_output[test_case]))
+        for i in range(0, len(self.opstack_output[test_case])):
+            self.assertTrue(self.compareObjectData(
+                self.psstacks.opstack[i], self.opstack_output[test_case][i]))
+
+    def test_input33(self):
+        testinput33 = """
+                /x 3 def
+                /y {x 2 mul} def
+                x y mul
+            """
+        test_case = 'test{}'.format(33)
+        expr_list = read(testinput33)
+        for expr in expr_list:
+            expr.evaluate(self.psstacks)
+        self.assertEqual(len(self.psstacks.opstack),
+                         len(self.opstack_output[test_case]))
+        for i in range(0, len(self.opstack_output[test_case])):
+            self.assertTrue(self.compareObjectData(
+                self.psstacks.opstack[i], self.opstack_output[test_case][i]))
+
+    def test_input34(self):
+        testinput34 = """
+                /isPositive {0 gt} def -7 dup isPositive {7 7 mul} {pop 99 -1 mul} ifelse
+            """
+        test_case = 'test{}'.format(34)
+        expr_list = read(testinput34)
+        for expr in expr_list:
+            expr.evaluate(self.psstacks)
+        self.assertEqual(len(self.psstacks.opstack),
+                         len(self.opstack_output[test_case]))
+        for i in range(0, len(self.opstack_output[test_case])):
+            self.assertTrue(self.compareObjectData(
+                self.psstacks.opstack[i], self.opstack_output[test_case][i]))
+
+    def test_input35(self):
+        testinput35 = """
+                /y {7 5 mul} def /x 0 def 4 {x y add} repeat
+            """
+        test_case = 'test{}'.format(35)
+        expr_list = read(testinput35)
+        for expr in expr_list:
+            expr.evaluate(self.psstacks)
+        self.assertEqual(len(self.psstacks.opstack),
+                         len(self.opstack_output[test_case]))
+        for i in range(0, len(self.opstack_output[test_case])):
+            self.assertTrue(self.compareObjectData(
+                self.psstacks.opstack[i], self.opstack_output[test_case][i]))
+
+    def test_input36(self):
+        testinput36 = """
+                [0 1 2 3] {1 add} forall 
+            """
+        test_case = 'test{}'.format(36)
+        expr_list = read(testinput36)
         for expr in expr_list:
             expr.evaluate(self.psstacks)
         self.assertEqual(len(self.psstacks.opstack),
