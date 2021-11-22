@@ -527,27 +527,27 @@ class HW4GradingTests(unittest.TestCase):
             self.assertTrue(self.compareObjectData(
                 self.psstacks.opstack[i], self.opstack_output[test_case][i]))
 
-    # def test_input29(self):
-    #     testinput29 = """
-    #             /fact {
-    #                 0 dict
-    #                 begin
-    #                     /n exch def
-    #                     1
-    #                     n { n mul /n n 1 sub def } repeat
-    #                 end
-    #             } def
-    #             6 fact
-    #         """
-    #     test_case = 'test{}'.format(29)
-    #     expr_list = read(testinput29)
-    #     for expr in expr_list:
-    #         expr.evaluate(self.psstacks)
-    #     self.assertEqual(len(self.psstacks.opstack),
-    #                      len(self.opstack_output[test_case]))
-    #     for i in range(0, len(self.opstack_output[test_case])):
-    #         self.assertTrue(self.compareObjectData(
-    #             self.psstacks.opstack[i], self.opstack_output[test_case][i]))
+    def test_input29(self):
+        testinput29 = """
+                /fact {
+                    0 dict
+                    begin
+                        /n exch def
+                        1
+                        n { n mul /n n 1 sub def } repeat
+                    end
+                } def
+                6 fact
+            """
+        test_case = 'test{}'.format(29)
+        expr_list = read(testinput29)
+        for expr in expr_list:
+            expr.evaluate(self.psstacks)
+        self.assertEqual(len(self.psstacks.opstack),
+                         len(self.opstack_output[test_case]))
+        for i in range(0, len(self.opstack_output[test_case])):
+            self.assertTrue(self.compareObjectData(
+                self.psstacks.opstack[i], self.opstack_output[test_case][i]))
 
     # def test_input30(self):
     #     testinput30 = """
