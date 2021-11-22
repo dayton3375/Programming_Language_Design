@@ -472,10 +472,15 @@ class Operators:
        Evaluates (applies) the `loopbody` `count` times. 
        Will be completed in part-2. 
     """
-
     def repeat(self):
-        pass
-        #TO-DO in part2
+        if len(self.opstack) > 2:
+            body = self.opPop()
+            count = self.opPop()
+            
+            for i in range(count):
+                body.apply(self)
+        else:
+            print("Error: repeat - not enough elements in opstack")
 
     """
        Implements forall operator.   
