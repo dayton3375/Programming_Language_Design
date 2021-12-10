@@ -9,7 +9,7 @@ https://creativecommons.org/licenses/by-sa/3.0/
 importing them from psParser.py"""
 
 def is_literal(s):
-    return isinstance(s, int) or isinstance(s, float) or isinstance(s, bool) or isinstance(s, Literal)
+    return isinstance(s, int) or isinstance(s, float) or isinstance(s, bool)
 
 
 """ Checks if the given token is an array object. """
@@ -23,7 +23,7 @@ def is_object(s):
     - a variable (or function)  """
 def is_name(s):
     DELIMITERS = set('(){}[]')
-    return (isinstance(s, str) or isinstance(s, Name)) and s not in DELIMITERS
+    return isinstance(s, str) and s not in DELIMITERS
 
 
 class Expr:
@@ -118,71 +118,67 @@ class Name(Expr):
 
     def __init__(self, var_name):
         Expr.__init__(self, var_name)
-        if isinstance(var_name, Name):
-            self.var_name = var_name.var_name
-        else:
-            self.var_name = var_name
+        self.var_name = var_name
 
     def evaluate(self, psstacks):
-        if isinstance(self.value, str):
-            if self.value == "add":
-                psstacks.add()
-            elif self.value == "sub":
-                psstacks.sub()
-            elif self.value == "mul":
-                psstacks.mul()
-            elif self.value == "mod":
-                psstacks.mod()
-            elif self.value == "eq":
-                psstacks.eq()
-            elif self.value == "lt":
-                psstacks.lt()
-            elif self.value == "gt":
-                psstacks.gt()
-            elif self.value == "length":
-                psstacks.length()
-            elif self.value == "getinterval":
-                psstacks.getinterval()
-            elif self.value == "putinterval":
-                psstacks.putinterval()
-            elif self.value == "aload":
-                psstacks.aload()
-            elif self.value == "astore":
-                psstacks.astore()
-            elif self.value == "pop":
-                psstacks.pop()
-            elif self.value == "stack":
-                psstacks.stack()
-            elif self.value == "dup":
-                psstacks.dup()
-            elif self.value == "copy":
-                psstacks.copy()
-            elif self.value == "count":
-                psstacks.count()
-            elif self.value == "clear":
-                psstacks.clear()
-            elif self.value == "exch":
-                psstacks.exch()
-            elif self.value == "roll":
-                psstacks.roll()
-            elif self.value == "dict":
-                psstacks.psDict()
-            elif self.value == "begin":
-                psstacks.begin()
-            elif self.value == "end":
-                psstacks.end()
-            elif self.value == "def":
-                psstacks.psDef()
-            elif self.value == "if":
-                psstacks.psIf()
-            elif self.value == "ifelse":
-                psstacks.psIfelse()
-            elif self.value == "repeat":
-                psstacks.repeat()
-            elif self.value == "forall":
-                psstacks.forall()
-            elif self.value[0] == '/':
-                psstacks.opPush(self.value)
+        if self.value == "add":
+            psstacks.add()
+        elif self.value == "sub":
+            psstacks.sub()
+        elif self.value == "mul":
+            psstacks.mul()
+        elif self.value == "mod":
+            psstacks.mod()
+        elif self.value == "eq":
+            psstacks.eq()
+        elif self.value == "lt":
+            psstacks.lt()
+        elif self.value == "gt":
+            psstacks.gt()
+        elif self.value == "length":
+            psstacks.length()
+        elif self.value == "getinterval":
+            psstacks.getinterval()
+        elif self.value == "putinterval":
+            psstacks.putinterval()
+        elif self.value == "aload":
+            psstacks.aload()
+        elif self.value == "astore":
+            psstacks.astore()
+        elif self.value == "pop":
+            psstacks.pop()
+        elif self.value == "stack":
+            psstacks.stack()
+        elif self.value == "dup":
+            psstacks.dup()
+        elif self.value == "copy":
+            psstacks.copy()
+        elif self.value == "count":
+            psstacks.count()
+        elif self.value == "clear":
+            psstacks.clear()
+        elif self.value == "exch":
+            psstacks.exch()
+        elif self.value == "roll":
+            psstacks.roll()
+        elif self.value == "dict":
+            psstacks.psDict()
+        elif self.value == "begin":
+            psstacks.begin()
+        elif self.value == "end":
+            psstacks.end()
+        elif self.value == "def":
+            psstacks.psDef()
+        elif self.value == "if":
+            psstacks.psIf()
+        elif self.value == "ifelse":
+            psstacks.psIfelse()
+        elif self.value == "repeat":
+            psstacks.repeat()
+        elif self.value == "forall":
+            psstacks.forall()
+        elif self.value[0] == '/' and isinstance(self.value, str):
+            psstacks.opPush(self.value)
         else:
             val = psstacks.lookup(self.var_name)
             if isinstance(val, FunctionValue):
@@ -275,7 +271,7 @@ class ArrayValue(Value):
             elif is_name(v):
                 buf.append(Name(v))
             else:
-                raise SyntaxError("Error Array.__init__() - unknown symbol")
+                buf.append(v)
 
         self.value = buf
 
@@ -303,7 +299,10 @@ class ArrayValue(Value):
 
         # fill array with evaluated values
         for l in reversed(buf):
-            self.value.append(l)
+            if is_literal(l):
+                self.value.append(Literal(l))
+            else:
+                self.value.append(l)
 
 
 # ------------------------------------------------------------

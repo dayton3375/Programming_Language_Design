@@ -1,6 +1,6 @@
 # Name: Dayton Dekam
 
-from psItems import Value, ArrayValue, FunctionValue
+from psItems import Literal, Value, ArrayValue, FunctionValue
 
 
 class Operators:
@@ -22,6 +22,7 @@ class Operators:
             '<' : 'lt',
             '>' : 'gt'
         }
+
     # -------  Operand Stack Operators --------------
     """
         Helper function. Pops the top value from opstack and returns it.
@@ -105,6 +106,8 @@ class Operators:
             op2 = self.opPop()
             if isinstance(op1, int) and isinstance(op2, int):
                 self.opPush(op1 + op2)
+            elif isinstance(op1, Literal) and isinstance(op2, Literal):
+                self.opPush(Literal(op1.value + op2.value))
             else:
                 print("Error: add - one of the operands is not a number value")
                 self.opPush(op2)
@@ -122,6 +125,8 @@ class Operators:
             op2 = self.opPop()
             if (isinstance(op1, int) and isinstance(op2, int)):
                 self.opPush(op2 - op1)
+            elif isinstance(op1, Literal) and isinstance(op2, Literal):
+                self.opPush(Literal(op1.value - op2.value))
             else:
                 print("Error: sub - one of the operands is not a number value")
         else:
@@ -137,6 +142,8 @@ class Operators:
             op2 = self.opPop()
             if (isinstance(op1, int) and isinstance(op2, int)):
                 self.opPush(op1 * op2)
+            elif isinstance(op1, Literal) and isinstance(op2, Literal):
+                self.opPush(Literal(op1.value * op2.value))
             else:
                 print("Error: mul - one of the operands is not a number value")
         else:
@@ -153,6 +160,8 @@ class Operators:
             op2 = self.opPop()
             if (isinstance(op1, int) and isinstance(op2, int)):
                 self.opPush(op2 % op1)
+            elif isinstance(op1, Literal) and isinstance(op2, Literal):
+                self.opPush(Literal(op1.value % op2.value))
             else:
                 print("Error: mod - one of the operands is not a number value")
         else:
@@ -167,6 +176,7 @@ class Operators:
         if len(self.opstack) > 1:
             op1 = self.opPop()
             op2 = self.opPop()
+
             self.opPush(op1 is op2)
         else:
             print("Error: eq expects 2 operands")
@@ -264,7 +274,10 @@ class Operators:
         if len(self.opstack) > 0:
             ar = self.opPop()
             for val in ar.value:
-                self.opPush(val)
+                if isinstance(val, Literal):
+                    self.opPush(val.value)
+                else:
+                    self.opPush(val)
             self.opPush(ar)
         else:
             print("Error: aload - opstack is empty")
@@ -283,7 +296,7 @@ class Operators:
                 length = len(ar.value)
                 ar.value.clear()
                 for i in range(length):
-                    ar.value.insert(0, self.opPop())
+                    ar.value.insert(0, Literal(self.opPop()))
                 self.opPush(ar)
             else:
                 print("Error: astore - opstack doesn't have enough elements")
@@ -507,7 +520,7 @@ class Operators:
             array = self.opPop()
             
             for elem in array.value:
-                self.opPush(elem)
+                self.opPush(elem.value)
                 codeArray.apply(self)
 
         else:
