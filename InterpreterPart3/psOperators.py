@@ -8,12 +8,11 @@ class Operators:
         # stack variables
         self.opstack = []  # assuming top of the stack is the end of the list
         self.dictstack = []  # assuming top of the stack is the end of the list
+        self.isStatic = (status == 'static')
+        self.staticIndex = 0
 
         # The builtin operators supported by our interpreter
         self.builtin_operators = {
-            # TO-DO in part1
-            # include the key value pairs where he keys are the PostScript opertor names and the values are the function values that implement that operator.
-            # Make sure **not to call the functions**
             '+' : 'add',
             '-' : 'sub',
             '*' : 'mul',
@@ -40,6 +39,7 @@ class Operators:
     """
 
     def opPush(self, value):
+
         self.opstack.append(value)
 
     # ------- Dict Stack Operators --------------
@@ -51,6 +51,8 @@ class Operators:
     def dictPop(self):
         if len(self.dictstack) > 0:
             val = self.dictstack.pop()
+            if self.isStatic:
+                self.staticIndex -= 1
         else:
             val = None
         return val
@@ -61,6 +63,8 @@ class Operators:
 
     def dictPush(self, d):
         self.dictstack.append(d)
+        if self.isStatic:
+            self.staticIndex += 1
 
     """
        Helper function. Adds name:value pair to the top dictionary in the dictstack.
@@ -68,11 +72,14 @@ class Operators:
     """
 
     def define(self, name, value):
-        if len(self.dictstack) == 0:
-            newdict = {}
-            self.dictstack.append(newdict)
-        # gets last element of list and adds the key:value to that dictionary
-        self.dictstack[-1][name] = value
+        if self.isStatic:
+            self.dictPush((self.staticIndex, {name : value}))
+        else: # is dynamic
+            if len(self.dictstack) == 0:
+                newdict = {}
+                self.dictstack.append(newdict)
+            # gets last element of list and adds the key:value to that dictionary
+            self.dictstack[-1][name] = value
 
     """
        Helper function. Searches the dictstack for a variable or function and returns its value. 
@@ -81,15 +88,19 @@ class Operators:
     """
 
     def lookup(self, name):
-        if len(self.dictstack) == 0:
-            print("Error: lookup - dictstack is empty")
-            return None
-
         key = '/' + name
+        if self.isStatic:
+            for (l, d) in self.dictstack:
+                if key in d.keys():
+                    return d[key]
+        else:
+            if len(self.dictstack) == 0:
+                print("Error: lookup - dictstack is empty")
+                return None
 
-        for d in reversed(self.dictstack):  # search each dictionary in the stack
-            if key in d:
-                return d[key]
+            for d in reversed(self.dictstack):  # search each dictionary in the stack
+                if key in d:
+                    return d[key]
 
         print("Error: lookup - name not found")
         return None

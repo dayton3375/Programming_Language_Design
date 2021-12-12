@@ -78,8 +78,30 @@ testinput8 = """
     B
     """
 
+testinput9 = """
+    /x [1 2 3 4] def
+    /g { x stack } def
+    /f { /x 7 def g } def
+    f
+            """
 
-tests = [testinput1, testinput2, testinput3, testinput4, testinput5, testinput6, testinput7, testinput8]
+testinput10 = """
+    /A { 1 4 add } def
+    /B { A stack } def
+    /C { /A 21 def B } def
+    C
+            """
+
+testinput11 = """
+    /x {[0 1 2 3] {20 mul} forall} def
+    /z { /x 40 def x } def
+    /y 7 def
+    z
+    stack
+            """
+
+
+tests = [testinput1, testinput2, testinput3, testinput4, testinput5, testinput6, testinput7, testinput8, testinput9, testinput10, testinput11]
 
 # program start
 if __name__ == '__main__':

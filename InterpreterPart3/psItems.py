@@ -320,8 +320,12 @@ class FunctionValue(Value):
         self.body = body
 
     def apply(self, psstacks):
+        if psstacks.isStatic:
+            psstacks.dictPush((psstacks.staticIndex, {}))
         for exp in self.value:
             exp.evaluate(psstacks)
+        if psstacks.isStatic:
+            psstacks.dictPop()
 
     def __str__(self):
         return '<function {}>'.format(self.body)
